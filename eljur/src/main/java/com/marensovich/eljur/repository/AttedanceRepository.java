@@ -1,0 +1,12 @@
+package com.marensovich.eljur.repository;
+
+import com.marensovich.eljur.model.Attendance;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
+@Repository
+public interface AttedanceRepository extends JpaRepository<Attendance, String> {
+    Optional<Attendance> findById(String id);
+}
