@@ -11,6 +11,8 @@ public class VisitService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+
+    //TODO: Разобраться в сервисе хранения данных о посещениях пользователей.
     public void recordVisit() {
         String sql = "INSERT INTO site_visits (visit_time) VALUES (NOW())";
         jdbcTemplate.update(sql);

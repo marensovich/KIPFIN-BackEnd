@@ -1,37 +1,56 @@
-version: '3.8'
-
 services:
   app:
     build: .
-    container_name: eljur-app
+    container_name: ${APP_NAME}-app
     restart: unless-stopped
     depends_on:
       redis:
         condition: service_healthy
       mariadb:
         condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=${DB_URL}
+      - SPRING_DATASOURCE_USERNAME=${DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - SPRING_DATASOURCE_DRIVER-CLASS-NAME=${DB_DRIVER}
+      - SPRING_JPA_HIBERNATE_DDL-AUTO=${HIBERNATE_DDL_AUTO}
+      - SPRING_JPA_SHOW-SQL=${SHOW_SQL}
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=${HIBERNATE_DIALECT}
+      - SPRING_SECURITY_USER_NAME=${SPRING_SECURITY_USER_NAME}
+      - SPRING_SECURITY_USER_PASSWORD=${SPRING_SECURITY_USER_PASSWORD}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRATION=${JWT_EXPIRATION}
+      - JWT_ISSUER=${JWT_ISSUER}
+      - SPRING_SESSION_STORE_TYPE=${SPRING_SESSION_STORE_TYPE}
+      - SPRING_DATA_REDIS_HOST=${SPRING_DATA_REDIS_HOST}
+      - SPRING_DATA_REDIS_PASSWORD=${SPRING_DATA_REDIS_PASSWORD}
+      - SPRING_DATA_REDIS_PORT=${SPRING_DATA_REDIS_PORT}
+      - UPLOAD_IMAGE_PROFILE_DIRECTORY=${UPLOAD_IMAGE_PROFILE_DIRECTORY}
     env_file:
       - .env
     ports:
-      - "8080:8080"
+      - "${HOST_APP_PORT}:${CONTAINER_APP_PORT}"
     volumes:
-      - ./upload:/data/images/profileImages
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      - ./docker/docker-data/app:${UPLOAD_IMAGE_PROFILE_DIRECTORY}
+    #healthcheck:
+    #  test: ["CMD", "curl", "-f", "http://localhost:${CONTAINER_APP_PORT}/actuator/health"]
+    #  interval: 30s
+    #  timeout: 10s
+    #  retries: 3
 
   mariadb:
     image: mariadb:10.11
-    container_name: eljur-mariadb
+    container_name: ${APP_NAME}-mariadb
     restart: unless-stopped
-    env_file:
-      - .env
+    environment:
+      - MARIADB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MARIADB_DATABASE=${DB_NAME}
+      - MARIADB_USER=${DB_USER}
+      - MARIADB_PASSWORD=${DB_PASSWORD}
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - ./docker/docker-data/mariadb:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "${HOST_DB_PORT}:${CONTAINER_DB_PORT}"
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 5s
@@ -40,21 +59,17 @@ services:
 
   redis:
     image: redis:7-alpine
-    container_name: eljur-redis
+    container_name: ${APP_NAME}-redis
     restart: unless-stopped
-    command: redis-server --requirepass ${SPRING_DATA_REDIS_PASSWORD}
-    env_file:
-      - .env
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
     volumes:
-      - redis_data:/data
+      - ./docker/docker-data/redis:/data
     ports:
-      - "6379:6379"
+      - "${HOST_REDIS_PORT}:${CONTAINER_REDIS_PORT}"
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
       interval: 5s
       timeout: 3s
       retries: 5
-
-volumes:
-  mariadb_data:
-  redis_data:

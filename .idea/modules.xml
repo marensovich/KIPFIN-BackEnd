@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/KIPFIN_BackEnd.iml" filepath="$PROJECT_DIR$/.idea/KIPFIN_BackEnd.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/eljur.main.iml" filepath="$PROJECT_DIR$/.idea/modules/eljur.main.iml" />
     </modules>
   </component>
 </project>
