@@ -1,0 +1,10 @@
+apiVersion: 1
+
+datasources:
+  - name: Docker
+    type: grafana-docker-datasource
+    access: proxy
+    url: unix:///var/run/docker.sock
+    jsonData:
+      socketPath: /var/run/docker.sock
+    editable: false

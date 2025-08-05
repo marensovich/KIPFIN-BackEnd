@@ -1,0 +1,7 @@
+apiVersion: 1
+
+plugins:
+  - name: grafana-docker-datasource
+    type: grafana-docker-datasource
+    version: latest
+    url: https://github.com/grafana/grafana-docker-datasource/releases/latest/download/grafana-docker-datasource.zip
