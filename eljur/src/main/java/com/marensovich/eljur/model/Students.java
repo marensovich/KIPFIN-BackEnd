@@ -22,35 +22,4 @@ public class Students implements Serializable {
     @Column(name = "students_subgroup", nullable = false)
     private Integer subgroup;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getFullname() {
-        return fullname;
-    }
-
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
-
-    public Integer getGroup() {
-        return group;
-    }
-
-    public void setGroup(Integer group) {
-        this.group = group;
-    }
-
-    public Integer getSubgroup() {
-        return subgroup;
-    }
-
-    public void setSubgroup(Integer subgroup) {
-        this.subgroup = subgroup;
-    }
 }

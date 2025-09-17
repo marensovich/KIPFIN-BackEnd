@@ -19,28 +19,4 @@ public class Teacher implements Serializable {
     private Integer teacher_subjectID;
     @Column(name = "teacher_groupID", unique = true)
     private Integer teacher_groupID;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getTeacher_subject() {
-        return teacher_subjectID;
-    }
-
-    public void setTeacher_subject(Integer teacher_subjectID) {
-        this.teacher_subjectID = teacher_subjectID;
-    }
-
-    public Integer getTeacher_groupID() {
-        return teacher_groupID;
-    }
-
-    public void setTeacher_groupID(Integer teacher_groupID) {
-        this.teacher_groupID = teacher_groupID;
-    }
 }

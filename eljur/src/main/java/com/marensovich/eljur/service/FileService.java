@@ -1,6 +1,7 @@
 package com.marensovich.eljur.service;
 
 
+import com.marensovich.eljur.model.Admins;
 import com.marensovich.eljur.repository.FilesRepository;
 import org.springframework.stereotype.Service;
 

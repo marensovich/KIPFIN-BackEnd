@@ -1,6 +1,8 @@
 package com.marensovich.eljur.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,10 +13,10 @@ public class StatRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime timestamp;
-    private double cpuUsage;
-    private long usedMemory;
-    private int visitCount;
+    @Getter private LocalDateTime timestamp;
+    @Getter private double cpuUsage;
+    @Getter private long usedMemory;
+    @Getter private int visitCount;
 
     public StatRecord() {
     }
@@ -24,21 +26,5 @@ public class StatRecord {
         this.cpuUsage = cpuUsage;
         this.usedMemory = usedMemory;
         this.visitCount = visitCount;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-    public double getCpuUsage() {
-        return cpuUsage;
-    }
-
-    public long getUsedMemory() {
-        return usedMemory;
-    }
-
-    public int getVisitCount() {
-        return visitCount;
     }
 }

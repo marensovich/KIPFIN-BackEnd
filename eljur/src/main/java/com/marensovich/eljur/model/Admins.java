@@ -22,36 +22,4 @@ public class Admins implements Serializable {
     private String photoLink;
     @Column(name = "admin_room", nullable = true, unique = false)
     private String room;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getPost() {
-        return post;
-    }
-
-    public void setPost(String post) {
-        this.post = post;
-    }
-
-    public String getPhotoLink() {
-        return photoLink;
-    }
-
-    public void setPhotoLink(String photoLink) {
-        this.photoLink = photoLink;
-    }
-
-    public String getRoom() {
-        return room;
-    }
-
-    public void setRoom(String room) {
-        this.room = room;
-    }
 }

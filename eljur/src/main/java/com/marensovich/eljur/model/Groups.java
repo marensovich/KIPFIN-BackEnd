@@ -24,44 +24,4 @@ public class Groups implements Serializable {
     private Integer HeadID;
     @Column(name = "group_teacherID", nullable = false, unique = true)
     private Integer teacherID;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getGroup() {
-        return group;
-    }
-
-    public void setGroup(String group) {
-        this.group = group;
-    }
-
-    public Integer getCuratorID() {
-        return curatorID;
-    }
-
-    public void setCuratorID(Integer curatorID) {
-        this.curatorID = curatorID;
-    }
-
-    public Integer getHeadID() {
-        return HeadID;
-    }
-
-    public void setHeadID(Integer headID) {
-        HeadID = headID;
-    }
-
-    public Integer getTeacherID() {
-        return teacherID;
-    }
-
-    public void setTeacherID(Integer teacherID) {
-        this.teacherID = teacherID;
-    }
 }

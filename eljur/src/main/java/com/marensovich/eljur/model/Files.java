@@ -30,43 +30,4 @@ public class Files implements Serializable {
     @Column(name = "file", nullable = false, columnDefinition = "LONGBLOB")
     private byte[] file;
 
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getUserID() {
-        return userID;
-    }
-
-    public void setUserID(Integer userID) {
-        this.userID = userID;
-    }
-
-    public FilesDataType getFiletype() {
-        return filetype;
-    }
-
-    public void setFiletype(FilesDataType filetype) {
-        this.filetype = filetype;
-    }
-
-    public String getFilename() {
-        return filename;
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
 }

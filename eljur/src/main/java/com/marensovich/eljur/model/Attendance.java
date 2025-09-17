@@ -29,43 +29,4 @@ public class Attendance implements Serializable {
     @Column(name = "attendance_lessonID", nullable = false)
     private Integer lessonID;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Boolean getConfirmed() {
-        return confirmed;
-    }
-
-    public void setConfirmed(Boolean confirmed) {
-        this.confirmed = confirmed;
-    }
-
-    public Integer getUserID() {
-        return userID;
-    }
-
-    public void setUserID(Integer userID) {
-        this.userID = userID;
-    }
-
-    public Timestamp getTime() {
-        return time;
-    }
-
-    public void setTime(Timestamp time) {
-        this.time = time;
-    }
-
-    public Integer getLessonID() {
-        return lessonID;
-    }
-
-    public void setLessonID(Integer lessonID) {
-        this.lessonID = lessonID;
-    }
 }
