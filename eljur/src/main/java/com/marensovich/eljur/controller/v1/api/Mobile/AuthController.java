@@ -31,10 +31,11 @@ public class AuthController {
             @RequestParam String password
     ) {
         User user = userRepository.getByUsernameMobile(login);
-        if (user == null) throw new UserNotFoundException("Пользователь не найдекн");
-        if (!password.equals(user.getPassword())) {
-            throw new InvalidPasswordException("Неверный пароль");
-        }
+
+        if (user == null) throw new UserNotFoundException("Пользователь не найден");
+        if (!password.equals(user.getPassword())) throw new InvalidPasswordException("Неверный пароль");
+
+
         return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Авторизация успешна!"));
     }
 }
