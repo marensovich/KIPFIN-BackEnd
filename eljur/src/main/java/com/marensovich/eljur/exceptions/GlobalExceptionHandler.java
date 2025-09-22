@@ -73,4 +73,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiError> handleInvalidToken(InvalidTokenException e, HttpServletRequest req) {
         return buildErrorResponse(e, HttpStatus.BAD_REQUEST, req);
     }
+
+    @ExceptionHandler(RegCodeNotFound.class)
+    public ResponseEntity<ApiError> handleRegCodeNotFound(RegCodeNotFound e, HttpServletRequest req) {
+        return buildErrorResponse(e, HttpStatus.NOT_FOUND, req);
+    }
+
+    @ExceptionHandler(RegCodeNotFound.class)
+    public ResponseEntity<ApiError> handleInvalidJwtTokenFormat(InvalidJwtTokenFormat e, HttpServletRequest req) {
+        return buildErrorResponse(e, HttpStatus.UNAUTHORIZED, req);
+    }
 }

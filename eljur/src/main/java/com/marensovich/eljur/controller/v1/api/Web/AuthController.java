@@ -31,13 +31,13 @@ public class AuthController {
             @RequestParam String password
     ) {
         User user = userRepository.findByUsername(login);
-        if (user == null) throw new UserNotFoundException("Пользователь не найден");
+        if (user == null) throw new UserNotFoundException("User not found");
 
-        if (!password.equals(user.getPassword())) throw new InvalidPasswordException("Неверный пароль");
+        if (!password.equals(user.getPassword())) throw new InvalidPasswordException("Incorrect password");
 
         String token = jwtUtil.generateToken(user.getId());
         return ResponseEntity.status(HttpStatus.OK).body(Map.of(
-                "message", "Авторизация успешна!",
+                "message", "Autorization Successful!",
                 "token", token
         ));
     }
@@ -49,6 +49,6 @@ public class AuthController {
         cookie.setPath("/");
         cookie.setMaxAge(0);
         response.addCookie(cookie);
-        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Выход успешно выполнен!"));
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Logout Successful!"));
     }
 }

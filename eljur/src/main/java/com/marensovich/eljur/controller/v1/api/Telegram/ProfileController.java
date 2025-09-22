@@ -33,7 +33,7 @@ public class ProfileController {
         Integer userID = jwtUtil.getUserIdFromToken(token);
         Optional<User> user = userRepository.findById(userID);
 
-        if (user.isEmpty()) throw new UserNotFoundException("Пользователь не найден");
+        if (user.isEmpty()) throw new UserNotFoundException("User not found");
 
         Map profileInfo = profileService.getProfileInfo(user);
 

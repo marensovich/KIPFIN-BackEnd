@@ -3,6 +3,7 @@ package com.marensovich.eljur.service;
 import com.marensovich.eljur.data.NotificationType;
 import com.marensovich.eljur.exceptions.Exceptions.ActivatedRegistrationCodeException;
 import com.marensovich.eljur.exceptions.Exceptions.InvalidRegistrationCodeException;
+import com.marensovich.eljur.exceptions.Exceptions.RegCodeNotFound;
 import com.marensovich.eljur.model.*;
 import com.marensovich.eljur.repository.RegKeysRepository;
 import com.marensovich.eljur.repository.StudentsRepository;
@@ -31,11 +32,11 @@ public class AuthService {
         String code = regKeysService.findRegistrationKey(key);
         String email = regKeysService.getEmailByRegistrationKey(key);
         RegKeys regKeys = regKeysRepository.findByRegistrationKey(key)
-                .orElseThrow(() -> new RuntimeException("Код регистрации не найден."));
+                .orElseThrow(() -> { throw new  RegCodeNotFound("Registration code not found."); });
         if (code == null) {
-            throw new InvalidRegistrationCodeException("Неправильно введен код регистрации");
+            throw new InvalidRegistrationCodeException("Invalid registration code.");
         } else if (regKeysService.getStatusByRegistrationKey(key).equals("Activated")) {
-            throw new ActivatedRegistrationCodeException("Данный код уже активирован.");
+            throw new ActivatedRegistrationCodeException("Registration code already activated.");
         }
         Timestamp timestamp = new Timestamp(new Date().getTime());
         regKeys.setEmail(email);

@@ -34,7 +34,7 @@ public class ImageController {
                         .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
                         .body(resource);
             } else {
-                throw new FileNotFoundException("Запрашиваемый файл не найден");
+                throw new FileNotFoundException("The requested file was not found");
             }
         } catch (MalformedURLException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

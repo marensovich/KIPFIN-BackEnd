@@ -20,7 +20,7 @@ public class TokenController {
     @GetMapping("/validateToken")
     public ResponseEntity<?> validateToken(@RequestParam String token) {
         if (jwtUtil.validateToken(token)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Token is valid");
+            return ResponseEntity.status(HttpStatus.OK).body("Token is valid");
         } else {
             throw new InvalidTokenException("Invalid Token");
         }

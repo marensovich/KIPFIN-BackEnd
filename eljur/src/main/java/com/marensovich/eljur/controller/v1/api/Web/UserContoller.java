@@ -2,6 +2,7 @@ package com.marensovich.eljur.controller.v1.api.Web;
 
 
 import com.marensovich.eljur.config.JWT.JwtUtil;
+import com.marensovich.eljur.exceptions.Exceptions.InvalidJwtTokenFormat;
 import com.marensovich.eljur.exceptions.Exceptions.UserNotFoundException;
 import com.marensovich.eljur.model.User;
 import com.marensovich.eljur.repository.UserRepository;
@@ -30,20 +31,16 @@ public class UserContoller {
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @GetMapping("/getUsernameByToken")
     public ResponseEntity<?> getUsernameByToken(@RequestParam String token) {
-        try {
-            if (token.chars().filter(ch -> ch == '.').count() != 2) {
-                return ResponseEntity.status(400).body(Map.of("message", "Invalid JWT format"));
-            }
-            Integer userID = jwtUtil.getUserIdFromToken(token);
-            Optional<User> userOptional = userRepository.findById(userID);
-            if (userOptional.isPresent()) {
-                String username = userOptional.get().getUsername();
-                return ResponseEntity.ok().body(Map.of("username", username));
-            } else {
-                throw new UserNotFoundException("Пользователь не найден");
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(401).body(Map.of("message", "Invalid or expired token"));
+        if (token.chars().filter(ch -> ch == '.').count() != 2) {
+            throw new InvalidJwtTokenFormat("Invalid token format");
+        }
+        Integer userID = jwtUtil.getUserIdFromToken(token);
+        Optional<User> userOptional = userRepository.findById(userID);
+        if (userOptional.isPresent()) {
+            String username = userOptional.get().getUsername();
+            return ResponseEntity.ok().body(Map.of("username", username));
+        } else {
+            throw new UserNotFoundException("User not found");
         }
     }
 
@@ -52,7 +49,7 @@ public class UserContoller {
     public ResponseEntity<?> getIDbyUsername(@RequestParam String username) {
         User user = userRepository.findByUsername(username);
 
-        if (user == null) throw new UserNotFoundException("Пользователь не найден");
+        if (user == null) throw new UserNotFoundException("User not found");
 
         return ResponseEntity.ok().body(Map.of("username", user.getUsername()));
     }
@@ -61,7 +58,7 @@ public class UserContoller {
     @GetMapping("/getAllInfo")
     public ResponseEntity<?> getAllUserInfo(@RequestParam Integer id) {
         Optional<User> user = userRepository.findById(id);
-        if (user.isEmpty()) throw new UserNotFoundException("Пользователь не найден");
+        if (user.isEmpty()) throw new UserNotFoundException("User not found");
 
         Map profileInfo = profileService.getProfileInfo(user);
 

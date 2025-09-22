@@ -39,7 +39,7 @@ public class ScheduleContoller {
             @RequestParam String endDate
     ) {
         User user = userRepository.findById(jwtUtil.getUserIdFromToken(token)).get();
-        if (user == null) throw new UserNotFoundException("Пользователь не найден");
+        if (user == null) throw new UserNotFoundException("User not found");
 
         visitService.recordVisit();
 

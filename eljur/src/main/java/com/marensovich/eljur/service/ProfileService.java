@@ -40,7 +40,7 @@ public class ProfileService {
             case Email -> user.get().setNotificationType(NotificationType.Email);
             case Telegram -> user.get().setNotificationType(NotificationType.Telegram);
             default -> {
-                throw new InvalidNotificationTypeException("Некорректный тип уведомлений");
+                throw new InvalidNotificationTypeException("Unsupported notification type: " + notificationType);
             }
         }
         if (notificationMessages != null) {

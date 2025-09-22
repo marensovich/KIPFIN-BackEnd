@@ -33,14 +33,18 @@ public class PrivateMessagesController {
 
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @GetMapping("getUserPm")
-    private ResponseEntity<?> getPM(@RequestParam String token, @RequestParam Integer offset) {
+    private ResponseEntity<?> getPM(@RequestParam String token) {
         Optional<User> user = userRepository.findById(jwtUtil.getUserIdFromToken(token));
 
-        if (user.isEmpty()) throw new UserNotFoundException("Пользователь не найден");
+        if (user.isEmpty()) throw new UserNotFoundException("User not found!");
 
-        TreeMap<String, TreeMap<Integer, Map<String, Object>>> groupedMessages = privateMessageService.getPrivateMessages(user);
+        try {
+            TreeMap<String, TreeMap<Integer, Map<String, Object>>> groupedMessages = privateMessageService.getPrivateMessages(user);
+            return ResponseEntity.status(HttpStatus.OK).body(groupedMessages);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "Error while getting PM"));
+        }
 
-        return ResponseEntity.status(HttpStatus.OK).body(groupedMessages);
     }
 
 }

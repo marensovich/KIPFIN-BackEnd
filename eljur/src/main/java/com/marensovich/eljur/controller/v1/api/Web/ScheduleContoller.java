@@ -32,7 +32,7 @@ public class ScheduleContoller {
             @RequestParam String endDate
     ) {
         User user = userRepository.findById(jwtUtil.getUserIdFromToken(token)).get();
-        if (user == null) throw new UserNotFoundException("Пользователь не найден");
+        if (user == null) throw new UserNotFoundException("User not found");
 
         visitService.recordVisit();
 
@@ -40,7 +40,7 @@ public class ScheduleContoller {
             TreeMap<String, TreeMap<Integer, Map<String, Object>>> groupedLessons = sheduleService.getLessons(user, startDate, endDate);
             return ResponseEntity.status(HttpStatus.OK).body(groupedLessons);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "error while getting shedule"));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "Error while getting schedule"));
         }
     }
 }

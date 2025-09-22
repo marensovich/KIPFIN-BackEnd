@@ -34,7 +34,7 @@ public class ScoresController {
 
         User user = userRepository.findById(jwtUtil.getUserIdFromToken(token)).orElse(null);
 
-        if (user == null) throw new UserNotFoundException("Пользователь не найден");
+        if (user == null) throw new UserNotFoundException("User not found");
 
         try {
             Map<String, List<Map<String, Object>>> scoresBySubject = scoreService.getScores(user, half);
@@ -50,7 +50,7 @@ public class ScoresController {
             @RequestParam String token,
             @RequestParam Integer year) {
         User user = userRepository.findById(jwtUtil.getUserIdFromToken(token)).orElse(null);
-        if (user == null) throw new UserNotFoundException("Пользователь не найден");
+        if (user == null) throw new UserNotFoundException("User not found");
 
         try {
             Map<String, Object> response = scoreService.getFinalScores(user, year);

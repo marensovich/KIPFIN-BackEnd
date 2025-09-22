@@ -45,7 +45,7 @@ public class FilesController {
     public ResponseEntity<byte[]> downloadFile(@PathVariable Integer id) {
         Optional<Files> fileOptional = filesRepository.findById(id);
 
-        if (fileOptional.isEmpty()) throw new FileNotFoundException("Запрашиваемый файл не найден");
+        if (fileOptional.isEmpty()) throw new FileNotFoundException("The requested file was not found");
 
         Files file = fileOptional.get();
         return ResponseEntity.status(HttpStatus.OK)

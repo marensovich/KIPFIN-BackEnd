@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.marensovich.eljur.exceptions.Exceptions.InvalidPasswordException;
 import com.marensovich.eljur.exceptions.Exceptions.UserNotFoundException;
+import com.marensovich.eljur.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,8 @@ public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private AuthService authService;
 
 
     @GetMapping("/login")
@@ -32,9 +35,8 @@ public class AuthController {
     ) {
         User user = userRepository.getByUsernameMobile(login);
 
-        if (user == null) throw new UserNotFoundException("Пользователь не найден");
-        if (!password.equals(user.getPassword())) throw new InvalidPasswordException("Неверный пароль");
-
+        if (user == null) throw new UserNotFoundException("User not found");
+        if (!password.equals(user.getPassword())) throw new InvalidPasswordException("Uncorrect password");
 
         return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Авторизация успешна!"));
     }

@@ -18,7 +18,7 @@ public class PrivateMessageService {
 
     public TreeMap<String, TreeMap<Integer, Map<String, Object>>> getPrivateMessages(Optional<User> user) {
         List<PrivateMessage> pm = privateMessageRepository.getPrivateMessagesById(user.get().getId());
-        TreeMap<String, TreeMap<Integer, Map<String, Object>>> groupedMessages = pm.stream().collect(Collectors.groupingBy(
+        return pm.stream().collect(Collectors.groupingBy(
                 privateMessage -> privateMessage.getDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),
                 TreeMap::new,
                 Collectors.toMap(
@@ -30,9 +30,8 @@ public class PrivateMessageService {
                             return pmDetails;
                         },
                         (existing, replacement) -> existing,
-                        () -> new TreeMap<>()
+                        TreeMap::new
                 )
         ));
-        return groupedMessages;
     }
 }
