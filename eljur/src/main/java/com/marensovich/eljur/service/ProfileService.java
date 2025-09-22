@@ -7,6 +7,7 @@ import com.marensovich.eljur.model.Students;
 import com.marensovich.eljur.model.Teacher;
 import com.marensovich.eljur.model.User;
 import com.marensovich.eljur.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -17,21 +18,13 @@ import java.util.Optional;
 @Service
 public class ProfileService {
 
-    private final UserRepository userRepository;
-    private final ScoreService scoreService;
-    private final StudentsRepository studentsRepository;
-    private final GroupsRepository groupsRepository;
-    private final TeacherRepository teacherRepository;
-    private final AdminRepostory adminRepostory;
+    @Autowired private UserRepository userRepository;
+    @Autowired private ScoreService scoreService;
+    @Autowired private StudentsRepository studentsRepository;
+    @Autowired private GroupsRepository groupsRepository;
+    @Autowired private TeacherRepository teacherRepository;
+    @Autowired private AdminRepostory adminRepostory;
 
-    public ProfileService(UserRepository userRepository, ScoreService scoreService, StudentsRepository studentsRepository, GroupsRepository groupsRepository, TeacherRepository teacherRepository, AdminRepostory adminRepostory) {
-        this.userRepository = userRepository;
-        this.scoreService = scoreService;
-        this.studentsRepository = studentsRepository;
-        this.groupsRepository = groupsRepository;
-        this.teacherRepository = teacherRepository;
-        this.adminRepostory = adminRepostory;
-    }
 
     public void setNotificationSettings(
             Optional<User> user,
@@ -79,7 +72,8 @@ public class ProfileService {
                 Map.entry("notificationMessages", user.get().isNotificationMessages()),
                 Map.entry("notificationHomework", user.get().isNotificationHomework()),
                 Map.entry("notificationScore", user.get().isNotificationScore()),
-                Map.entry("notificationNews", user.get().isNotificationNews())
+                Map.entry("notificationNews", user.get().isNotificationNews()),
+                Map.entry("blackTheme", user.get().isBlack_theme())
         );
     }
 

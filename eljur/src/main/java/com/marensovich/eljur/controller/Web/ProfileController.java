@@ -2,20 +2,15 @@ package com.marensovich.eljur.controller.Web;
 
 
 import com.marensovich.eljur.config.JWT.JwtUtil;
-import com.marensovich.eljur.data.NotificationType;
-import com.marensovich.eljur.exceptions.Exceptions.InvalidNotificationTypeException;
 import com.marensovich.eljur.exceptions.Exceptions.UserNotFoundException;
 import com.marensovich.eljur.model.*;
 import com.marensovich.eljur.repository.*;
 import com.marensovich.eljur.service.ProfileService;
-import com.marensovich.eljur.service.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Nullable;
-import java.io.Serializable;
 import java.util.Map;
 import java.util.Optional;
 
@@ -27,8 +22,6 @@ public class ProfileController {
     private UserRepository userRepository;
     @Autowired
     private JwtUtil jwtUtil;
-    @Autowired
-    private ScoreService scoreService;
     @Autowired
     private ProfileService profileService;
 

@@ -9,8 +9,8 @@ import com.marensovich.eljur.repository.StudentsRepository;
 import com.marensovich.eljur.repository.TeacherRepository;
 import com.marensovich.eljur.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -18,18 +18,11 @@ import java.util.Date;
 @Service
 public class AuthService {
 
-    private final RegKeysService regKeysService;
-    private final RegKeysRepository regKeysRepository;
-    private final StudentsRepository studentsRepository;
-    private final TeacherRepository teacherRepository;
-    private UserRepository userRepository;
-
-    public AuthService(RegKeysService regKeysService, RegKeysRepository regKeysRepository, StudentsRepository studentsRepository, TeacherRepository teacherRepository) {
-        this.regKeysService = regKeysService;
-        this.regKeysRepository = regKeysRepository;
-        this.studentsRepository = studentsRepository;
-        this.teacherRepository = teacherRepository;
-    }
+    @Autowired private RegKeysService regKeysService;
+    @Autowired private RegKeysRepository regKeysRepository;
+    @Autowired private StudentsRepository studentsRepository;
+    @Autowired private TeacherRepository teacherRepository;
+    @Autowired private UserRepository userRepository;
 
     //private PasswordEncoder passwordEncoder;
 
