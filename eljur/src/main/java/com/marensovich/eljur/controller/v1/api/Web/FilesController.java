@@ -1,4 +1,4 @@
-package com.marensovich.eljur.controller.Web;
+package com.marensovich.eljur.controller.v1.api.Web;
 
 
 import com.marensovich.eljur.exceptions.Exceptions.FileNotFoundException;
@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/files")
+@RequestMapping("/api/v1/files")
 public class FilesController {
 
     @Autowired

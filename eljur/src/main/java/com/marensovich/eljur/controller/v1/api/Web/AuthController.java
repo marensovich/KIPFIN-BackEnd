@@ -1,9 +1,8 @@
-package com.marensovich.eljur.controller.Web;
+package com.marensovich.eljur.controller.v1.api.Web;
 
 import com.marensovich.eljur.config.JWT.JwtUtil;
 import com.marensovich.eljur.exceptions.Exceptions.InvalidPasswordException;
 import com.marensovich.eljur.exceptions.Exceptions.UserNotFoundException;
-import com.marensovich.eljur.exceptions.Handlers.AuthHandler;
 import com.marensovich.eljur.model.User;
 import com.marensovich.eljur.repository.UserRepository;
 import jakarta.servlet.http.Cookie;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/auth")
 public class AuthController {
 
     @Autowired

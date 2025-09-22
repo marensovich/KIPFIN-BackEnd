@@ -1,17 +1,21 @@
-package com.marensovich.eljur.controller.Web;
+package com.marensovich.eljur.controller.v1.api.Mobile;
 
+import java.util.Map;
 import com.marensovich.eljur.service.AuthService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/api/auth")
+@Controller("mobileRegController")
+@RequestMapping("/api/v1/mobile/auth")
 public class RegController {
+
 
     @Autowired
     private AuthService authService;
@@ -27,4 +31,6 @@ public class RegController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "Error while registration user."));
         }
     }
+
+
 }

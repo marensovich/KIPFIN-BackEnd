@@ -1,4 +1,4 @@
-package com.marensovich.eljur.controller.Web;
+package com.marensovich.eljur.controller.v1.api.Web;
 
 
 
@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/token")
+@RequestMapping("/api/v1/token")
 public class TokenController {
 
     @Autowired

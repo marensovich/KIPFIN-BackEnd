@@ -1,4 +1,4 @@
-package com.marensovich.eljur.controller.Web;
+package com.marensovich.eljur.controller.v1.api.Web;
 
 
 import com.marensovich.eljur.config.JWT.JwtUtil;
@@ -16,7 +16,7 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("/api/scores")
+@RequestMapping("/api/v1/scores")
 public class ScoresController {
 
     @Autowired

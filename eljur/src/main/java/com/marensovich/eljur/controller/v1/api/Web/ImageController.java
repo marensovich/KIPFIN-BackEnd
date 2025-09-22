@@ -1,4 +1,4 @@
-package com.marensovich.eljur.controller.Web;
+package com.marensovich.eljur.controller.v1.api.Web;
 
 
 import java.net.MalformedURLException;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/images/")
+@RequestMapping("/api/v1/images/")
 public class ImageController {
 
     private final String avatarPath = Paths.get("data/images/profileImages").toString();

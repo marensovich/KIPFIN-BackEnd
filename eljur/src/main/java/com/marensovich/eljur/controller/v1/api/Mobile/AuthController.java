@@ -1,4 +1,4 @@
-package com.marensovich.eljur.controller.Mobile;
+package com.marensovich.eljur.controller.v1.api.Mobile;
 
 import java.util.Map;
 
@@ -18,7 +18,7 @@ import com.marensovich.eljur.repository.UserRepository;
 
 @RestController
 @Controller("mobileAuthController")
-@RequestMapping("/api/mobile/auth")
+@RequestMapping("/api/v1/mobile/auth")
 public class AuthController {
 
     @Autowired

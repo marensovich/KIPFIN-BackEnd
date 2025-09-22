@@ -1,4 +1,4 @@
-package com.marensovich.eljur.controller.Web;
+package com.marensovich.eljur.controller.v1.api.Web;
 
 
 import com.marensovich.eljur.model.StatRecord;
@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/tech")
+@RequestMapping("/api/v1/tech")
 public class TechController {
 
     @Autowired

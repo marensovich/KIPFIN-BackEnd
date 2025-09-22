@@ -1,4 +1,4 @@
-package com.marensovich.eljur.controller.Web;
+package com.marensovich.eljur.controller.v1.api.Web;
 
 import java.util.Map;
 import java.util.Optional;
@@ -20,7 +20,7 @@ import com.marensovich.eljur.model.User;
 import com.marensovich.eljur.repository.UserRepository;
 
 @RestController
-@RequestMapping("/api/pm/")
+@RequestMapping("/api/v1/pm/")
 public class PrivateMessagesController {
 
     @Autowired

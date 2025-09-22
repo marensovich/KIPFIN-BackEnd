@@ -1,11 +1,9 @@
-package com.marensovich.eljur.controller.Web;
+package com.marensovich.eljur.controller.v1.api.Web;
 
 import com.marensovich.eljur.config.JWT.JwtUtil;
 import com.marensovich.eljur.exceptions.Exceptions.UserNotFoundException;
 import com.marensovich.eljur.model.*;
 import com.marensovich.eljur.repository.*;
-import com.marensovich.eljur.service.FileService;
-import com.marensovich.eljur.service.ScoreService;
 import com.marensovich.eljur.service.SheduleService;
 import com.marensovich.eljur.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/lessons")
+@RequestMapping("/api/v1/lessons")
 public class ScheduleContoller {
 
     @Autowired private JwtUtil jwtUtil;
