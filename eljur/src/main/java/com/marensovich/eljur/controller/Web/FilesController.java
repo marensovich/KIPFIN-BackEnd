@@ -1,10 +1,10 @@
 package com.marensovich.eljur.controller.Web;
 
 
-import com.marensovich.eljur.data.FilesDataType;
 import com.marensovich.eljur.exceptions.Exceptions.FileNotFoundException;
 import com.marensovich.eljur.model.Files;
 import com.marensovich.eljur.repository.FilesRepository;
+import com.marensovich.eljur.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,6 +22,8 @@ public class FilesController {
 
     @Autowired
     private FilesRepository filesRepository;
+    @Autowired
+    private FileService fileService;
 
 
     @PostMapping("/upload")
@@ -31,13 +33,7 @@ public class FilesController {
             @RequestParam("fileType") String fileType
     ) {
         try {
-            Files newFile = new Files();
-            newFile.setUserID(userID);
-            newFile.setFiletype(FilesDataType.valueOf(fileType));
-            newFile.setFilename(file.getOriginalFilename());
-            newFile.setFile(file.getBytes());
-
-            filesRepository.save(newFile);
+            Files newFile = fileService.uploadFile(userID, file, fileType);
 
             return ResponseEntity.status(HttpStatus.OK).body("Файл успешно загружен с ID: " + newFile.getId());
         } catch (IOException e) {
