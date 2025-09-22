@@ -26,14 +26,10 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/lessons")
 public class ScheduleContoller {
 
-    @Autowired
-    private JwtUtil jwtUtil;
-    @Autowired
-    private VisitService visitService;
-    @Autowired
-    private SheduleService sheduleService;
-    @Autowired
-        private UserRepository userRepository;
+    @Autowired private JwtUtil jwtUtil;
+    @Autowired private VisitService visitService;
+    @Autowired private SheduleService sheduleService;
+    @Autowired private UserRepository userRepository;
 
 
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
@@ -44,18 +40,16 @@ public class ScheduleContoller {
             @RequestParam String endDate
     ) {
         User user = userRepository.findById(jwtUtil.getUserIdFromToken(token)).get();
-
         if (user == null) throw new UserNotFoundException("Пользователь не найден");
 
         visitService.recordVisit();
 
-        TreeMap<String, TreeMap<Integer, Map<String, Object>>> groupedLessons = sheduleService.getLessons(user, startDate, endDate);
-
-        return ResponseEntity.status(HttpStatus.OK).body(groupedLessons);
+        try {
+            TreeMap<String, TreeMap<Integer, Map<String, Object>>> groupedLessons = sheduleService.getLessons(user, startDate, endDate);
+            return ResponseEntity.status(HttpStatus.OK).body(groupedLessons);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "error while getting shedule"));
+        }
     }
-
-
-
-
 }
 
