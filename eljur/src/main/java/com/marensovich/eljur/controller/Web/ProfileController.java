@@ -7,12 +7,14 @@ import com.marensovich.eljur.exceptions.Exceptions.InvalidNotificationTypeExcept
 import com.marensovich.eljur.exceptions.Exceptions.UserNotFoundException;
 import com.marensovich.eljur.model.*;
 import com.marensovich.eljur.repository.*;
+import com.marensovich.eljur.service.ProfileService;
 import com.marensovich.eljur.service.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Optional;
@@ -36,34 +38,39 @@ public class ProfileController {
     private Serializable ScoreService;
     @Autowired
     private ScoreService scoreService;
+    @Autowired
+    private ProfileService profileService;
 
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @GetMapping("/setNotificationSettings")
     public ResponseEntity<?> setNotificationSettings(@RequestParam String token,
-                                                     @RequestParam String notificationType,
-                                                     @RequestParam Boolean notificationMessages,
-                                                     @RequestParam Boolean notificationHomework,
-                                                     @RequestParam Boolean notificationScore,
-                                                     @RequestParam Boolean notificationNews
+                                                     @RequestParam(required = false) String notificationType,
+                                                     @RequestParam(required = false) Boolean notificationMessages,
+                                                     @RequestParam(required = false) Boolean notificationHomework,
+                                                     @RequestParam(required = false) Boolean notificationScore,
+                                                     @RequestParam(required = false) Boolean notificationNews
+
     ) {
         Integer userID = jwtUtil.getUserIdFromToken(token);
         Optional<User> user = userRepository.findById(userID);
 
         if (user.isEmpty()) throw new UserNotFoundException("Пользователь не найден");
 
-        switch (notificationType) {
-            case "Without_Notification" -> user.get().setNotificationType(NotificationType.Without_Notification);
-            case "Email" -> user.get().setNotificationType(NotificationType.Email);
-            case "Telegram" -> user.get().setNotificationType(NotificationType.Telegram);
-            default -> {
-                throw new InvalidNotificationTypeException("Некорректный тип уведомлений");
-            }
+        try {
+            profileService.setNotificationSettings(
+                    user,
+                    notificationType,
+                    notificationMessages,
+                    notificationHomework,
+                    notificationScore,
+                    notificationNews
+            );
+            return ResponseEntity.ok(Map.of("message", "Settings successfully applied"));
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("message", "Error while saving settings"));
         }
-        user.get().setNotificationMessages(notificationMessages);
-        user.get().setNotificationHomework(notificationHomework);
-        user.get().setNotificationScore(notificationScore);
-        user.get().setNotificationNews(notificationNews);
-        return ResponseEntity.ok(Map.of("message", "Settings successfully applied"));
     }
 
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
