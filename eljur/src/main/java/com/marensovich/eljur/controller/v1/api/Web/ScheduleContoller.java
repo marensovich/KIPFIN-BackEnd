@@ -48,7 +48,7 @@ public class ScheduleContoller {
      * @throws UserNotFoundException if the user does not exist
      * @since v.0.1
      */
-    @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
+    @CrossOrigin(origins = "http://202.181.188.160:25998", allowCredentials = "true")
     @GetMapping("/getLessons")
     public ResponseEntity<?> getLessons(
             @RequestParam String token,

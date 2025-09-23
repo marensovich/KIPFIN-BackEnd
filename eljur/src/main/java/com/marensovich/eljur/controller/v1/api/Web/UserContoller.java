@@ -53,7 +53,7 @@ public class UserContoller {
      * @throws UserNotFoundException if the user does not exist
      * @since v.0.1
      */
-    @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
+    @CrossOrigin(origins = "http://202.181.188.160:25998", allowCredentials = "true")
     @GetMapping("/getUsernameByToken")
     public ResponseEntity<?> getUsernameByToken(@RequestParam String token) {
         if (token.chars().filter(ch -> ch == '.').count() != 2) {
@@ -77,7 +77,7 @@ public class UserContoller {
      * @throws UserNotFoundException if the user does not exist
      * @since v.0.1
      */
-    @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
+    @CrossOrigin(origins = "http://202.181.188.160:25998", allowCredentials = "true")
     @GetMapping("/getIDbyUsername")
     public ResponseEntity<?> getIDbyUsername(@RequestParam String username) {
         User user = userRepository.findByUsername(username);
@@ -95,7 +95,7 @@ public class UserContoller {
      * @throws UserNotFoundException if the user does not exist
      * @since v.0.1
      */
-    @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
+    @CrossOrigin(origins = "http://202.181.188.160:25998", allowCredentials = "true")
     @GetMapping("/getAllInfo")
     public ResponseEntity<?> getAllUserInfo(@RequestParam Integer id) {
         Optional<User> user = userRepository.findById(id);

@@ -51,7 +51,7 @@ public class AuthController {
      * @throws InvalidPasswordException  if the provided password is incorrect
      * @since v.0.1
      */
-    @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
+    @CrossOrigin(origins = "http://202.181.188.160:25998", allowCredentials = "true")
     @PostMapping("/login")
     public ResponseEntity<?> login(
             @RequestParam String login,
@@ -79,7 +79,7 @@ public class AuthController {
      * @return the response entity with a success or error message
      * @since v.0.1
      */
-    @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
+    @CrossOrigin(origins = "http://202.181.188.160:25998", allowCredentials = "true")
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestParam String key, @RequestParam String login, @RequestParam String password, HttpServletRequest request) {
         try {
