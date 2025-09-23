@@ -45,8 +45,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/tech")
 public class TechController {
 
-    //TODO: Simplify the methods for obtaining data in N time. Create one method that accepts the "time" argument.
-
     @Autowired
     private TechService techService;
 
