@@ -1,13 +1,18 @@
 package com.marensovich.eljur.exceptions.Exceptions;
 
 /**
- * The type Reg code not found.
+ * Thrown when a registration code cannot be found in the system.
+ *
+ * @author marensovich
+ * @version v.0.1
+ * @since v.0.1
  */
 public class RegCodeNotFound extends RuntimeException {
+
     /**
-     * Instantiates a new Reg code not found.
+     * Instantiates a new Reg code not found exception.
      *
-     * @param message the message
+     * @param message the error message
      */
     public RegCodeNotFound(String message) {
         super(message);

@@ -1,13 +1,18 @@
 package com.marensovich.eljur.exceptions.Exceptions;
 
 /**
- * The type Invalid token exception.
+ * Thrown when a provided JWT token is invalid.
+ *
+ * @author marensovich
+ * @version v.0.1
+ * @since v.0.1
  */
 public class InvalidTokenException extends RuntimeException {
+
     /**
      * Instantiates a new Invalid token exception.
      *
-     * @param message the message
+     * @param message the error message
      */
     public InvalidTokenException(String message) {
         super(message);

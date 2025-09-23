@@ -1,13 +1,18 @@
 package com.marensovich.eljur.exceptions.Exceptions;
 
 /**
- * The type Invalid registration code exception.
+ * Thrown when a registration code is invalid or not recognized.
+ *
+ * @author marensovich
+ * @version v.0.1
+ * @since v.0.1
  */
 public class InvalidRegistrationCodeException extends RuntimeException {
+
     /**
      * Instantiates a new Invalid registration code exception.
      *
-     * @param message the message
+     * @param message the error message
      */
     public InvalidRegistrationCodeException(String message) {
         super(message);
