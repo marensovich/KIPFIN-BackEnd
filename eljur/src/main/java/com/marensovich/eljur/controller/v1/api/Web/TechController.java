@@ -136,54 +136,28 @@ public class TechController {
         );
     }
 
-    /**
-     * Returns the number of visits recorded in the last 10 minutes.
-     *
-     * @return a map containing visit statistics
-     * @since v.0.1
-     */
-    @GetMapping("/visitsLast10Minutes")
-    public Map<String, Object> getVisitsLast10Minutes() {
-        int visits = visitService.getVisitsLast10Minutes();
-        return Map.of("visitsLast10Minutes", visits);
-    }
-
-    /**
-     * Returns the number of visits recorded in the last hour.
-     *
-     * @return a map containing visit statistics
-     * @since v.0.1
-     */
-    @GetMapping("/visitsLastHour")
-    public Map<String, Object> getVisitsLastHour() {
-        int visits = visitService.getVisitsLastHour();
-        return Map.of("visitsLastHour", visits);
-    }
 
 
     /**
-     * Returns the number of visits recorded in the last 12 hours.
+     * REST endpoint for retrieving the number of visits within a given time interval.
      *
-     * @return a map containing visit statistics
+     * <p>Example requests:
+     * <ul>
+     *   <li>{@code GET /api/v1/visits?time=30m} → returns visits in the last 30 minutes</li>
+     *   <li>{@code GET /api/v1/visits?time=1h} → returns visits in the last hour</li>
+     *   <li>{@code GET /api/v1/visits?time=1h30m} → returns visits in the last 90 minutes</li>
+     *   <li>{@code GET /api/v1/visits?time=2d3h15m} → returns visits in the last 2 days, 3 hours, 15 minutes</li>
+     * </ul>
+     *
      * @since v.0.1
+     * @param time the time interval string (e.g. "30m", "1h", "1h30m", "2d3h15m")
+     * @return a JSON response containing the number of visits, e.g. {@code {"visits": 42}}
      */
-    @GetMapping("/visitsLast12Hours")
-    public Map<String, Object> getVisitsLast12Hours() {
-        int visits = visitService.getVisitsLast12Hours();
-        return Map.of("visitsLast12Hours", visits);
+    @GetMapping("/visits")
+    public Map<String, Object> getVisits(@RequestParam String time) {
+        return Map.of("visits", visitService.getVisits(time));
     }
 
-    /**
-     * Returns the number of visits recorded in the last 24 hours.
-     *
-     * @return a map containing visit statistics
-     * @since v.0.1
-     */
-    @GetMapping("/visitsLastDay")
-    public Map<String, Object> getVisitsLastDay() {
-        int visits = visitService.getVisitsLastDay();
-        return Map.of("visitsLastDay", visits);
-    }
 
     /**
      * Returns graph data for CPU usage, memory usage, and visits for the last 24 hours.
