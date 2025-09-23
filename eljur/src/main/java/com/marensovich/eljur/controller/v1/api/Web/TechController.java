@@ -21,11 +21,31 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
- * The type Tech controller.
+ * REST controller for system technical statistics and monitoring.
+ *
+ * <p>This controller provides endpoints for:
+ * <ul>
+ *     <li>Database information (size, connections, version, engine)</li>
+ *     <li>CPU usage statistics</li>
+ *     <li>Memory usage statistics</li>
+ *     <li>System uptime</li>
+ *     <li>Operating system information</li>
+ *     <li>Visits statistics (10 minutes, 1 hour, 12 hours, 24 hours)</li>
+ *     <li>Graph data for CPU, memory, and visits</li>
+ *     <li>Combined system statistics</li>
+ * </ul>
+ *
+ * <p>Endpoints are primarily used in the admin panel for system monitoring.</p>
+ *
+ * @author marensovich
+ * @version v.0.1
+ * @since v.0.1
  */
 @RestController
 @RequestMapping("/api/v1/tech")
 public class TechController {
+
+    //TODO: Simplify the methods for obtaining data in N time. Create one method that accepts the "time" argument.
 
     @Autowired
     private TechService techService;
@@ -36,9 +56,10 @@ public class TechController {
     private StatRepository statRepository;
 
     /**
-     * Gets database info.
+     * Returns database statistics including size, active connections, version, and engine.
      *
-     * @return the database info
+     * @return a map containing database information
+     * @since v.0.1
      */
     @GetMapping("/database")
     public Map<String, Object> getDatabaseInfo() {
@@ -56,9 +77,10 @@ public class TechController {
     }
 
     /**
-     * Gets cpu usage.
+     * Returns current CPU usage and number of CPU cores.
      *
-     * @return the cpu usage
+     * @return a map containing CPU usage statistics
+     * @since v.0.1
      */
     @GetMapping("/cpu")
     public Map<String, Object> getCpuUsage() {
@@ -71,9 +93,10 @@ public class TechController {
     }
 
     /**
-     * Gets memory usage.
+     * Returns memory usage statistics.
      *
-     * @return the memory usage
+     * @return a map containing memory usage details
+     * @since v.0.1
      */
     @GetMapping("/memory")
     public Map<String, Object> getMemoryUsage() {
@@ -81,9 +104,10 @@ public class TechController {
     }
 
     /**
-     * Gets uptime.
+     * Returns system uptime in a human-readable format.
      *
-     * @return the uptime
+     * @return a map containing system uptime
+     * @since v.0.1
      */
     @GetMapping("/uptime")
     public Map<String, Object> getUptime() {
@@ -92,9 +116,10 @@ public class TechController {
     }
 
     /**
-     * Gets os info.
+     * Returns operating system information including name, architecture, version, and processors.
      *
-     * @return the os info
+     * @return a map containing OS information
+     * @since v.0.1
      */
     @GetMapping("/os")
     public Map<String, Object> getOsInfo() {
@@ -112,9 +137,10 @@ public class TechController {
     }
 
     /**
-     * Gets visits last 10 minutes.
+     * Returns the number of visits recorded in the last 10 minutes.
      *
-     * @return the visits last 10 minutes
+     * @return a map containing visit statistics
+     * @since v.0.1
      */
     @GetMapping("/visitsLast10Minutes")
     public Map<String, Object> getVisitsLast10Minutes() {
@@ -123,9 +149,10 @@ public class TechController {
     }
 
     /**
-     * Gets visits last hour.
+     * Returns the number of visits recorded in the last hour.
      *
-     * @return the visits last hour
+     * @return a map containing visit statistics
+     * @since v.0.1
      */
     @GetMapping("/visitsLastHour")
     public Map<String, Object> getVisitsLastHour() {
@@ -133,10 +160,12 @@ public class TechController {
         return Map.of("visitsLastHour", visits);
     }
 
+
     /**
-     * Gets visits last 12 hours.
+     * Returns the number of visits recorded in the last 12 hours.
      *
-     * @return the visits last 12 hours
+     * @return a map containing visit statistics
+     * @since v.0.1
      */
     @GetMapping("/visitsLast12Hours")
     public Map<String, Object> getVisitsLast12Hours() {
@@ -145,9 +174,10 @@ public class TechController {
     }
 
     /**
-     * Gets visits last day.
+     * Returns the number of visits recorded in the last 24 hours.
      *
-     * @return the visits last day
+     * @return a map containing visit statistics
+     * @since v.0.1
      */
     @GetMapping("/visitsLastDay")
     public Map<String, Object> getVisitsLastDay() {
@@ -156,10 +186,11 @@ public class TechController {
     }
 
     /**
-     * Gets graph data.
+     * Returns graph data for CPU usage, memory usage, and visits for the last 24 hours.
      *
-     * @param range the range
-     * @return the graph data
+     * @param range optional time range (default 24h)
+     * @return a map containing graph datasets
+     * @since v.0.1
      */
     @GetMapping("/graph")
     public Map<String, Object> getGraphData(@RequestParam(required = false, defaultValue = "24h") String range) {
@@ -205,31 +236,12 @@ public class TechController {
         );
     }
 
-    private LocalDateTime parseTimeRange(String range) {
-        Pattern pattern = Pattern.compile("(\\d+)([mh])");
-        Matcher matcher = pattern.matcher(range);
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime startTime = now;
-
-        while (matcher.find()) {
-            int value = Integer.parseInt(matcher.group(1));
-            String unit = matcher.group(2);
-
-            if ("m".equals(unit)) {
-                startTime = startTime.minusMinutes(value);
-            } else if ("h".equals(unit)) {
-                startTime = startTime.minusHours(value);
-            }
-        }
-
-        return startTime;
-    }
-
     /**
-     * Gets all stats.
+     * Returns combined system statistics including database, CPU, memory, uptime, OS, visits, and graph data.
      *
-     * @param range the range
-     * @return the all stats
+     * @param range optional time range (default 24h)
+     * @return a map containing all system statistics
+     * @since v.0.1
      */
     @GetMapping("/all")
     public Map<String, Object> getAllStats(@RequestParam(required = false, defaultValue = "24h") String range) {
@@ -299,6 +311,25 @@ public class TechController {
         );
     }
 
+    private LocalDateTime parseTimeRange(String range) {
+        Pattern pattern = Pattern.compile("(\\d+)([mh])");
+        Matcher matcher = pattern.matcher(range);
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime startTime = now;
+
+        while (matcher.find()) {
+            int value = Integer.parseInt(matcher.group(1));
+            String unit = matcher.group(2);
+
+            if ("m".equals(unit)) {
+                startTime = startTime.minusMinutes(value);
+            } else if ("h".equals(unit)) {
+                startTime = startTime.minusHours(value);
+            }
+        }
+
+        return startTime;
+    }
 
 }
 

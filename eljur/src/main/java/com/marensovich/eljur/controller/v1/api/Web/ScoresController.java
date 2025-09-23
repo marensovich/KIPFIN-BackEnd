@@ -16,7 +16,19 @@ import java.util.Map;
 
 
 /**
- * The type Scores controller.
+ * REST controller for managing student scores.
+ *
+ * <p>This controller provides endpoints for:
+ * <ul>
+ *     <li>Fetching scores for a specific half of the year</li>
+ *     <li>Fetching final scores for a given year</li>
+ * </ul>
+ *
+ * Requires JWT-based authentication.
+ *
+ * @author marensovich
+ * @version v.0.1
+ * @since v.0.1
  */
 @RestController
 @RequestMapping("/api/v1/scores")
@@ -30,11 +42,13 @@ public class ScoresController {
     private JwtUtil jwtUtil;
 
     /**
-     * Gets scores.
+     * Retrieves scores for the specified half-year.
      *
-     * @param token the token
-     * @param half  the half
-     * @return the scores
+     * @param token the JWT token of the user
+     * @param half  the half of the academic year (e.g. 1 or 2)
+     * @return the response entity containing scores grouped by subject
+     * @throws UserNotFoundException if the user does not exist
+     * @since v.0.1
      */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @GetMapping("/getScores")
@@ -55,11 +69,13 @@ public class ScoresController {
     }
 
     /**
-     * Gets final scores.
+     * Retrieves final scores for the specified year.
      *
-     * @param token the token
-     * @param year  the year
-     * @return the final scores
+     * @param token the JWT token of the user
+     * @param year  the academic year
+     * @return the response entity containing final scores
+     * @throws UserNotFoundException if the user does not exist
+     * @since v.0.1
      */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @GetMapping("/getFinalScores")

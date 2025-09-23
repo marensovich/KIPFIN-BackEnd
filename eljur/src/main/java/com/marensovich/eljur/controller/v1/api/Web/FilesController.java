@@ -17,7 +17,17 @@ import java.io.IOException;
 import java.util.Optional;
 
 /**
- * The type Files controller.
+ * REST controller for handling file operations.
+ *
+ * <p>This controller provides endpoints for:
+ * <ul>
+ *     <li>Uploading files</li>
+ *     <li>Downloading files by ID</li>
+ * </ul>
+ *
+ * @author marensovich
+ * @version v.0.1
+ * @since v.0.1
  */
 @RestController
 @RequestMapping("/api/v1/files")
@@ -30,12 +40,13 @@ public class FilesController {
 
 
     /**
-     * Upload file response entity.
+     * Uploads a new file and stores it in the database.
      *
-     * @param file     the file
-     * @param userID   the user id
-     * @param fileType the file type
-     * @return the response entity
+     * @param file     the uploaded file
+     * @param userID   the ID of the user who uploads the file
+     * @param fileType the type of the file
+     * @return the response entity containing the file ID or error message
+     * @since v.0.1
      */
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(
@@ -53,10 +64,12 @@ public class FilesController {
     }
 
     /**
-     * Download file response entity.
+     * Downloads a file by its ID.
      *
-     * @param id the id
-     * @return the response entity
+     * @param id the ID of the file
+     * @return the response entity with the file as a byte array
+     * @throws FileNotFoundException if the file does not exist
+     * @since v.0.1
      */
     @GetMapping("/download/{id}")
     public ResponseEntity<byte[]> downloadFile(@PathVariable Integer id) {

@@ -15,7 +15,20 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * The type Profile controller.
+ * REST controller for managing user profiles.
+ *
+ * <p>This controller provides endpoints for:
+ * <ul>
+ *     <li>Updating notification settings</li>
+ *     <li>Changing profile images</li>
+ *     <li>Fetching profile information</li>
+ * </ul>
+ *
+ * Authentication is based on JWT tokens.
+ *
+ * @author marensovich
+ * @version v.0.1
+ * @since v.0.1
  */
 @RestController
 @RequestMapping("/api/v1/profile")
@@ -29,15 +42,17 @@ public class ProfileController {
     private ProfileService profileService;
 
     /**
-     * Sets notification settings.
+     * Updates user notification settings.
      *
-     * @param token                the token
-     * @param notificationType     the notification type
-     * @param notificationMessages the notification messages
-     * @param notificationHomework the notification homework
-     * @param notificationScore    the notification score
-     * @param notificationNews     the notification news
-     * @return the notification settings
+     * @param token                the JWT token of the user
+     * @param notificationType     the type of notifications
+     * @param notificationMessages whether to enable/disable message notifications
+     * @param notificationHomework whether to enable/disable homework notifications
+     * @param notificationScore    whether to enable/disable score notifications
+     * @param notificationNews     whether to enable/disable news notifications
+     * @return the response entity with success or error message
+     * @throws UserNotFoundException if the user does not exist
+     * @since v.0.1
      */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @GetMapping("/setNotificationSettings")
@@ -72,11 +87,13 @@ public class ProfileController {
     }
 
     /**
-     * Sets profile image.
+     * Updates the profile image for the user.
      *
-     * @param token    the token
-     * @param filename the filename
-     * @return the profile image
+     * @param token    the JWT token of the user
+     * @param filename the image file name
+     * @return the response entity with success message
+     * @throws UserNotFoundException if the user does not exist
+     * @since v.0.1
      */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @GetMapping("/setProfileImage")
@@ -92,10 +109,12 @@ public class ProfileController {
 
 
     /**
-     * Profile info response entity.
+     * Retrieves profile information of the user.
      *
-     * @param token the token
-     * @return the response entity
+     * @param token the JWT token of the user
+     * @return the response entity containing profile info
+     * @throws UserNotFoundException if the user does not exist
+     * @since v.0.1
      */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @GetMapping("/getProfileInfo")

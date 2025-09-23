@@ -20,7 +20,18 @@ import com.marensovich.eljur.model.User;
 import com.marensovich.eljur.repository.UserRepository;
 
 /**
- * The type Private messages controller.
+ * REST controller for private messaging.
+ *
+ * <p>This controller provides endpoints for:
+ * <ul>
+ *     <li>Fetching private messages of a user</li>
+ * </ul>
+ *
+ * Authentication is handled via JWT token.
+ *
+ * @author marensovich
+ * @version v.0.1
+ * @since v.0.1
  */
 @RestController
 @RequestMapping("/api/v1/pm/")
@@ -33,10 +44,17 @@ public class PrivateMessagesController {
     @Autowired
     private PrivateMessageService privateMessageService;
 
-
+    /**
+     * Retrieves private messages for a user identified by JWT token.
+     *
+     * @param token the JWT token of the authenticated user
+     * @return the response entity with grouped messages or error message
+     * @throws UserNotFoundException if the user does not exist
+     * @since v.0.1
+     */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
-    @GetMapping("getUserPm")
-    private ResponseEntity<?> getPM(@RequestParam String token) {
+    @GetMapping("getUserPrivateMessage")
+    private ResponseEntity<?> getUserPrivateMessage(@RequestParam String token) {
         Optional<User> user = userRepository.findById(jwtUtil.getUserIdFromToken(token));
 
         if (user.isEmpty()) throw new UserNotFoundException("User not found!");

@@ -16,7 +16,20 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * The type User contoller.
+ * REST controller for managing user-related data.
+ *
+ * <p>This controller provides endpoints for:
+ * <ul>
+ *     <li>Getting username by token</li>
+ *     <li>Getting user ID by username</li>
+ *     <li>Fetching complete user profile information</li>
+ * </ul>
+ *
+ * Requires JWT-based authentication for some endpoints.
+ *
+ * @author marensovich
+ * @version v.0.1
+ * @since v.0.1
  */
 @RestController
 @RequestMapping("/api/v1/users")
@@ -32,10 +45,13 @@ public class UserContoller {
 
 
     /**
-     * Gets username by token.
+     * Retrieves the username of a user by JWT token.
      *
-     * @param token the token
-     * @return the username by token
+     * @param token the JWT token
+     * @return the response entity containing the username
+     * @throws InvalidJwtTokenFormat if the token format is invalid
+     * @throws UserNotFoundException if the user does not exist
+     * @since v.0.1
      */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @GetMapping("/getUsernameByToken")
@@ -54,10 +70,12 @@ public class UserContoller {
     }
 
     /**
-     * Gets i dby username.
+     * Retrieves the user ID by username.
      *
      * @param username the username
-     * @return the i dby username
+     * @return the response entity containing the user ID
+     * @throws UserNotFoundException if the user does not exist
+     * @since v.0.1
      */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @GetMapping("/getIDbyUsername")
@@ -70,10 +88,12 @@ public class UserContoller {
     }
 
     /**
-     * Gets all user info.
+     * Retrieves full user profile information by user ID.
      *
-     * @param id the id
-     * @return the all user info
+     * @param id the user ID
+     * @return the response entity containing profile information
+     * @throws UserNotFoundException if the user does not exist
+     * @since v.0.1
      */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @GetMapping("/getAllInfo")

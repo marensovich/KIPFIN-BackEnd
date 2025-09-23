@@ -17,7 +17,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 /**
- * The type Auth controller.
+ * REST controller for user authentication and registration.
+ *
+ * <p>This controller provides endpoints for:
+ * <ul>
+ *     <li>User login {@code (/api/v1/auth/login) } </li>
+ *     <li>User registration {@code (api/v1/auth/register) }</li>
+ *     <li>User logout {@code (api/v1/auth/logout) } </li>
+ * </ul>
+ *
+ * @author marensovich
+ * @version v.0.1
+ * @since v.0.1
  */
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -31,11 +42,14 @@ public class AuthController {
     private JwtUtil jwtUtil;
 
     /**
-     * Login response entity.
+     * Authenticates a user and returns a JWT token if credentials are valid.
      *
-     * @param login    the login
+     * @param login    the username
      * @param password the password
-     * @return the response entity
+     * @return the response entity with a JWT token or error message
+     * @throws UserNotFoundException     if the user does not exist
+     * @throws InvalidPasswordException  if the provided password is incorrect
+     * @since v.0.1
      */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @PostMapping("/login")
@@ -50,19 +64,20 @@ public class AuthController {
 
         String token = jwtUtil.generateToken(user.getId());
         return ResponseEntity.status(HttpStatus.OK).body(Map.of(
-                "message", "Autorization Successful!",
+                "message", "Authorization Successful!",
                 "token", token
         ));
     }
 
     /**
-     * Register response entity.
+     * Registers a new user with a provided key.
      *
-     * @param key      the key
-     * @param login    the login
-     * @param password the password
-     * @param request  the request
-     * @return the response entity
+     * @param key      the registration key
+     * @param login    the desired username
+     * @param password the desired password
+     * @param request  the HTTP request
+     * @return the response entity with a success or error message
+     * @since v.0.1
      */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @PostMapping("/register")
@@ -71,15 +86,16 @@ public class AuthController {
             authService.registrationUser(key, login, password, request);
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "You have successfully registered!"));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "Error while registration user."));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "Error while registering user."));
         }
     }
 
     /**
-     * Logout response entity.
+     * Logs out the current user by clearing the authentication cookie.
      *
-     * @param response the response
-     * @return the response entity
+     * @param response the HTTP response
+     * @return the response entity with a logout success message
+     * @since v.0.1
      */
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletResponse response) {

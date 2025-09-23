@@ -18,7 +18,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * The type Image controller.
+ * REST controller for serving image files.
+ *
+ * <p>This controller provides endpoints for:
+ * <ul>
+ *     <li>Loading user avatars</li>
+ * </ul>
+ *
+ * Images are served from the directory {@code data/images/profileImages}.
+ *
+ * @author marensovich
+ * @version v.0.1
+ * @since v.0.1
  */
 @RestController
 @RequestMapping("/api/v1/images/")
@@ -27,10 +38,12 @@ public class ImageController {
     private final String avatarPath = Paths.get("data/images/profileImages").toString();
 
     /**
-     * Gets avatar.
+     * Returns a user avatar by file name.
      *
-     * @param fileName the file name
-     * @return the avatar
+     * @param fileName the name of the avatar file
+     * @return the response entity containing the image resource
+     * @throws FileNotFoundException if the file does not exist
+     * @since v.0.1
      */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @GetMapping("avatars/{fileName}")
