@@ -9,6 +9,6 @@ public class TelegramBotConfig {
 
     @Bean
     public TelegramBotNotifier telegramBotNotifier() {
-        return new TelegramBotNotifier("7639553720:AAETD7HuaSI1MOH0Mza7QyNnP1_IMFLb2qk", "-1002357984483");
+        return new TelegramBotNotifier("7639553720:AAFFd33rhCZEYjKngnZaB1f2MNfnJ8L82Gc", "6737078498");
     }
 }

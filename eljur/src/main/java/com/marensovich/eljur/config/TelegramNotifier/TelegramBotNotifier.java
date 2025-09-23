@@ -1,10 +1,21 @@
 package com.marensovich.eljur.config.TelegramNotifier;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class TelegramBotNotifier {
 
     private final String botToken;
     private final String chatId;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public TelegramBotNotifier(String botToken, String chatId) {
         this.botToken = botToken;
@@ -12,25 +23,67 @@ public class TelegramBotNotifier {
     }
 
     public void sendMessage(String message) {
-        //try {
-        //    String urlString = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s";
-        //    urlString = String.format(urlString, botToken, chatId, URLEncoder.encode(message, "UTF-8"));
+        try {
+            Map<String, Object> payload = Map.of(
+                    "chat_id", chatId,
+                    "text", message,
+                    "parse_mode", "MarkdownV2"
+            );
 
-        //    URL url = new URL(urlString);
-        //    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        //    connection.setRequestMethod("GET");
+            String json = objectMapper.writeValueAsString(payload);
 
-        //    BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        //    String inputLine;
-        //    StringBuilder response = new StringBuilder();
+            String urlString = "https://api.telegram.org/bot" + botToken + "/sendMessage";
+            URL url = new URL(urlString);
 
-        //    while ((inputLine = in.readLine()) != null) {
-        //        response.append(inputLine);
-        //    }
-        //    in.close();
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            connection.setDoOutput(true);
 
-        //} catch (Exception e) {
-        //    e.printStackTrace();
-        //}
+            try (OutputStream os = connection.getOutputStream()) {
+                byte[] input = json.getBytes(StandardCharsets.UTF_8);
+                os.write(input, 0, input.length);
+            }
+
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = in.readLine()) != null) {
+                    response.append(line);
+                }
+            }
+
+            if (connection.getErrorStream() != null) {
+                String errorResponse = new BufferedReader(new InputStreamReader(connection.getErrorStream()))
+                        .lines().collect(Collectors.joining("\n"));
+                System.err.println("Telegram error: " + errorResponse);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String escapeMarkdownV2(String text) {
+        return text
+                .replace("\\", "\\\\")
+                .replace("_", "\\_")
+                .replace("*", "\\*")
+                .replace("[", "\\[")
+                .replace("]", "\\]")
+                .replace("(", "\\(")
+                .replace(")", "\\)")
+                .replace("~", "\\~")
+                .replace("`", "\\`")
+                .replace(">", "\\>")
+                .replace("#", "\\#")
+                .replace("+", "\\+")
+                .replace("-", "\\-")
+                .replace("=", "\\=")
+                .replace("|", "\\|")
+                .replace("{", "\\{")
+                .replace("}", "\\}")
+                .replace(".", "\\.")
+                .replace("!", "\\!");
     }
 }

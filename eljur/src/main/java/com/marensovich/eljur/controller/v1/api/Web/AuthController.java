@@ -5,7 +5,9 @@ import com.marensovich.eljur.exceptions.Exceptions.InvalidPasswordException;
 import com.marensovich.eljur.exceptions.Exceptions.UserNotFoundException;
 import com.marensovich.eljur.model.User;
 import com.marensovich.eljur.repository.UserRepository;
+import com.marensovich.eljur.service.AuthService;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +22,8 @@ public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private AuthService authService;
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -41,6 +44,18 @@ public class AuthController {
                 "token", token
         ));
     }
+
+    @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestParam String key, @RequestParam String login, @RequestParam String password, HttpServletRequest request) {
+        try {
+            authService.registrationUser(key, login, password, request);
+            return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "You have successfully registered!"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "Error while registration user."));
+        }
+    }
+
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletResponse response) {
         Cookie cookie = new Cookie("token", null);
