@@ -8,6 +8,9 @@ import org.checkerframework.checker.units.qual.Length;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+/**
+ * The type Attendance.
+ */
 @Entity
 @Data
 @Table(name = "attendance")

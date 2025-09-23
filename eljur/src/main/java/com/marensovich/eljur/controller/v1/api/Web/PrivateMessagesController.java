@@ -19,6 +19,9 @@ import com.marensovich.eljur.config.JWT.JwtUtil;
 import com.marensovich.eljur.model.User;
 import com.marensovich.eljur.repository.UserRepository;
 
+/**
+ * The type Private messages controller.
+ */
 @RestController
 @RequestMapping("/api/v1/pm/")
 public class PrivateMessagesController {

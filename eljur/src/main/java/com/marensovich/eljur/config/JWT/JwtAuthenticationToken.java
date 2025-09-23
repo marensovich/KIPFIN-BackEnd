@@ -7,11 +7,19 @@ import org.springframework.security.core.GrantedAuthority;
 import java.util.Collection;
 import java.util.Collections;
 
+/**
+ * The type Jwt authentication token.
+ */
 public class JwtAuthenticationToken implements Authentication {
 
     private final Integer userId; // ID пользователя
     private boolean authenticated = true; // Флаг аутентификации
 
+    /**
+     * Instantiates a new Jwt authentication token.
+     *
+     * @param userId the user id
+     */
     public JwtAuthenticationToken(Integer userId) {
         this.userId = userId;
     }

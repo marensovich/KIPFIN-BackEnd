@@ -7,9 +7,18 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * The interface Groups to subject repository.
+ */
 @Repository
 public interface GroupsToSubjectRepository extends JpaRepository<GroupsToSubjects, Integer> {
 
+    /**
+     * Gets all subjects by group id.
+     *
+     * @param groupId the group id
+     * @return the all subjects by group id
+     */
     @Query("SELECT g.subjectId FROM GroupsToSubjects g WHERE g.groupId = :groupId")
     List<Integer> getAllSubjectsByGroupId(Integer groupId);
 

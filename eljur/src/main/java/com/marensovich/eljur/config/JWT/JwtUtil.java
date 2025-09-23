@@ -15,6 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+/**
+ * The type Jwt util.
+ */
 @Service
 public class JwtUtil {
 
@@ -26,6 +29,9 @@ public class JwtUtil {
 
     private Key key;
 
+    /**
+     * Init.
+     */
     @PostConstruct
     public void init() {
         try {
@@ -38,7 +44,13 @@ public class JwtUtil {
         }
     }
 
-    // Генерация токена с userId
+    /**
+     * Generate token string.
+     *
+     * @param userId the user id
+     * @return the string
+     */
+// Генерация токена с userId
     public String generateToken(Integer userId) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", userId); // Добавляем userId в claims
@@ -55,7 +67,13 @@ public class JwtUtil {
                 .compact();
     }
 
-    // Валидация токена
+    /**
+     * Validate token boolean.
+     *
+     * @param token the token
+     * @return the boolean
+     */
+// Валидация токена
     public boolean validateToken(String token) {
         try {
             Claims claims = extractAllClaims(token);
@@ -79,7 +97,13 @@ public class JwtUtil {
                 .getBody();
     }
 
-    // Извлечение userId из токена
+    /**
+     * Gets user id from token.
+     *
+     * @param token the token
+     * @return the user id from token
+     */
+// Извлечение userId из токена
     public Integer getUserIdFromToken(String token) {
         return extractClaim(token, claims -> claims.get("userId", Integer.class));
     }

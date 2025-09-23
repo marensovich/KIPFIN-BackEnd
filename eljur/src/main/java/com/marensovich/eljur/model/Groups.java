@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * The type Groups.
+ */
 @Entity
 @Data
 @Table(name = "`group`")

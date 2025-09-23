@@ -7,6 +7,9 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 
+/**
+ * The type Reg keys.
+ */
 @Data
 @Entity
 @Table(name = "regKeys")

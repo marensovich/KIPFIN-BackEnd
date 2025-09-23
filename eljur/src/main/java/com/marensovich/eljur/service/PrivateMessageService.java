@@ -10,12 +10,21 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * The type Private message service.
+ */
 @Service
 public class PrivateMessageService {
 
     @Autowired
     private PrivateMessageRepository privateMessageRepository;
 
+    /**
+     * Gets private messages.
+     *
+     * @param user the user
+     * @return the private messages
+     */
     public TreeMap<String, TreeMap<Integer, Map<String, Object>>> getPrivateMessages(Optional<User> user) {
         List<PrivateMessage> pm = privateMessageRepository.getPrivateMessagesById(user.get().getId());
         return pm.stream().collect(Collectors.groupingBy(

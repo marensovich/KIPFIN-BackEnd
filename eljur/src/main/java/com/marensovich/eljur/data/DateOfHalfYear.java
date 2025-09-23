@@ -3,12 +3,21 @@ package com.marensovich.eljur.data;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * The enum Date of half year.
+ */
 public enum DateOfHalfYear {
 
+    /**
+     * First date of half year.
+     */
     FIRST(
             LocalDate.parse("01.09.2025", DateTimeFormatter.ofPattern("dd.MM.yyyy")),
             LocalDate.parse("29.12.2025", DateTimeFormatter.ofPattern("dd.MM.yyyy"))
     ),
+    /**
+     * Second date of half year.
+     */
     SECOND(
             LocalDate.parse("13.01.2026", DateTimeFormatter.ofPattern("dd.MM.yyyy")),
             LocalDate.parse("15.07.2026", DateTimeFormatter.ofPattern("dd.MM.yyyy"))
@@ -22,10 +31,20 @@ public enum DateOfHalfYear {
         this.endDate = endDate;
     }
 
+    /**
+     * Gets start date.
+     *
+     * @return the start date
+     */
     public LocalDate getStartDate() {
         return startDate;
     }
 
+    /**
+     * Gets end date.
+     *
+     * @return the end date
+     */
     public LocalDate getEndDate() {
         return endDate;
     }

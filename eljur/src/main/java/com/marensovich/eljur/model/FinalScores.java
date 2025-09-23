@@ -7,6 +7,9 @@ import lombok.Data;
 import java.io.Serializable;
 import java.time.Year;
 
+/**
+ * The type Final scores.
+ */
 @Data
 @Entity
 @Table(name = "finalScores")

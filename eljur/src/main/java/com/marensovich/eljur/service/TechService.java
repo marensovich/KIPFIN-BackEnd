@@ -18,6 +18,10 @@ import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+/**
+ * The type Tech service.
+ */
 @Service
 public class TechService {
 
@@ -28,7 +32,10 @@ public class TechService {
     @Autowired
     private VisitService visitService;
 
-    //@Scheduled(fixedRate = 600000) // 10 минут в миллисекундах
+    /**
+     * Collect stats.
+     */
+//@Scheduled(fixedRate = 600000) // 10 минут в миллисекундах
     //@Scheduled(cron = "0 * * * * * ")
     @Scheduled(cron = "0 */10 * * * *") // Каждые 10 минут
     @Transactional
@@ -47,31 +54,62 @@ public class TechService {
         statRepository.save(record);
     }
 
+    /**
+     * Gets stats for time range.
+     *
+     * @param startTime the start time
+     * @return the stats for time range
+     */
     public List<StatRecord> getStatsForTimeRange(LocalDateTime startTime) {
         return statRepository.findStatsSince(startTime);
     }
 
+    /**
+     * Gets database size.
+     *
+     * @return the database size
+     */
     public String getDatabaseSize() {
         String sql = "SELECT SUM(data_length + index_length) / 1024 / 1024 AS size_mb FROM information_schema.TABLES WHERE table_schema = DATABASE()";
         Double sizeMb = jdbcTemplate.queryForObject(sql, Double.class);
         return sizeMb != null ? String.format("%.2f MB", sizeMb) : "N/A";
     }
 
+    /**
+     * Gets database version.
+     *
+     * @return the database version
+     */
     public String getDatabaseVersion() {
         String sql = "SELECT VERSION()";
         return jdbcTemplate.queryForObject(sql, String.class);
     }
 
+    /**
+     * Gets database engine.
+     *
+     * @return the database engine
+     */
     public String getDatabaseEngine() {
         String sql = "SELECT ENGINE FROM information_schema.tables WHERE table_schema = DATABASE() LIMIT 1";
         return jdbcTemplate.queryForObject(sql, String.class);
     }
 
+    /**
+     * Gets active connections.
+     *
+     * @return the active connections
+     */
     public int getActiveConnections() {
         String sql = "SELECT COUNT(*) FROM information_schema.PROCESSLIST WHERE DB = DATABASE()";
         return jdbcTemplate.queryForObject(sql, Integer.class);
     }
 
+    /**
+     * Gets cpu usage.
+     *
+     * @return the cpu usage
+     */
     public double getCpuUsage() {
         OperatingSystemMXBean osBean = ManagementFactory.getOperatingSystemMXBean();
         if (osBean instanceof com.sun.management.OperatingSystemMXBean) {
@@ -81,11 +119,21 @@ public class TechService {
         return -1;
     }
 
+    /**
+     * Gets cpu cores.
+     *
+     * @return the cpu cores
+     */
     public String getCpuCores() {
         OperatingSystemMXBean osBean = ManagementFactory.getOperatingSystemMXBean();
         return String.valueOf(osBean.getAvailableProcessors());
     }
 
+    /**
+     * Gets memory usage.
+     *
+     * @return the memory usage
+     */
     public Map<String, Object> getMemoryUsage() {
         MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
         long usedMemory = memoryBean.getHeapMemoryUsage().getUsed();
@@ -99,24 +147,49 @@ public class TechService {
         return memoryInfo;
     }
 
+    /**
+     * Gets uptime.
+     *
+     * @return the uptime
+     */
     public String getUptime() {
         RuntimeMXBean runtimeBean = ManagementFactory.getRuntimeMXBean();
         long uptime = runtimeBean.getUptime();
         return formatUptime(uptime);
     }
 
+    /**
+     * Gets os name.
+     *
+     * @return the os name
+     */
     public String getOsName() {
         return System.getProperty("os.name");
     }
 
+    /**
+     * Gets os arch.
+     *
+     * @return the os arch
+     */
     public String getOsArch() {
         return System.getProperty("os.arch");
     }
 
+    /**
+     * Gets os version.
+     *
+     * @return the os version
+     */
     public String getOsVersion() {
         return System.getProperty("os.version");
     }
 
+    /**
+     * Gets available processors.
+     *
+     * @return the available processors
+     */
     public long getAvailableProcessors() {
         return Runtime.getRuntime().availableProcessors();
     }

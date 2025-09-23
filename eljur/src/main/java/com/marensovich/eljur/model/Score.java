@@ -8,8 +8,11 @@ import lombok.Data;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-@Data
+/**
+ * The type Score.
+ */
 @Entity
+@Data
 @Table(name = "score")
 public class Score implements Serializable {
 

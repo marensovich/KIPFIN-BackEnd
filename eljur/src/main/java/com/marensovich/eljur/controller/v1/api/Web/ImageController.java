@@ -17,12 +17,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * The type Image controller.
+ */
 @RestController
 @RequestMapping("/api/v1/images/")
 public class ImageController {
 
     private final String avatarPath = Paths.get("data/images/profileImages").toString();
 
+    /**
+     * Gets avatar.
+     *
+     * @param fileName the file name
+     * @return the avatar
+     */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @GetMapping("avatars/{fileName}")
     public ResponseEntity<Resource> getAvatar(@PathVariable String fileName) {

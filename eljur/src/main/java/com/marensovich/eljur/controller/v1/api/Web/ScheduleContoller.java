@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * The type Schedule contoller.
+ */
 @RestController
 @RequestMapping("/api/v1/lessons")
 public class ScheduleContoller {
@@ -24,6 +27,14 @@ public class ScheduleContoller {
     @Autowired private UserRepository userRepository;
 
 
+    /**
+     * Gets lessons.
+     *
+     * @param token     the token
+     * @param startDate the start date
+     * @param endDate   the end date
+     * @return the lessons
+     */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @GetMapping("/getLessons")
     public ResponseEntity<?> getLessons(

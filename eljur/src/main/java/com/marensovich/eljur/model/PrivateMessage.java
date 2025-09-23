@@ -7,6 +7,9 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 
+/**
+ * The type Private message.
+ */
 @Data
 @Entity
 @Table(name = "private_messages")

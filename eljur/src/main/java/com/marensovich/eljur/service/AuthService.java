@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.Date;
 
+/**
+ * The type Auth service.
+ */
 @Service
 public class AuthService {
 
@@ -28,6 +31,14 @@ public class AuthService {
     //private PasswordEncoder passwordEncoder;
 
 
+    /**
+     * Registration user.
+     *
+     * @param key      the key
+     * @param login    the login
+     * @param password the password
+     * @param request  the request
+     */
     public void registrationUser(String key, String login, String password, HttpServletRequest request) {
         String code = regKeysService.findRegistrationKey(key);
         String email = regKeysService.getEmailByRegistrationKey(key);

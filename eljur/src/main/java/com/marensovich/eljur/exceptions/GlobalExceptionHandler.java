@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
 
+/**
+ * The type Global exception handler.
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -50,51 +53,121 @@ public class GlobalExceptionHandler {
     }
 
 
+    /**
+     * Handle user not found response entity.
+     *
+     * @param e   the e
+     * @param req the req
+     * @return the response entity
+     */
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ApiError> handleUserNotFound(UserNotFoundException e, HttpServletRequest req) {
         return buildErrorResponse(e, HttpStatus.NOT_FOUND, req);
     }
 
+    /**
+     * Handle invalid password response entity.
+     *
+     * @param e   the e
+     * @param req the req
+     * @return the response entity
+     */
     @ExceptionHandler(InvalidPasswordException.class)
     public ResponseEntity<ApiError> handleInvalidPassword(InvalidPasswordException e, HttpServletRequest req) {
         return buildErrorResponse(e, HttpStatus.UNAUTHORIZED, req);
     }
 
+    /**
+     * Handle general response entity.
+     *
+     * @param e   the e
+     * @param req the req
+     * @return the response entity
+     */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleGeneral(Exception e, HttpServletRequest req) {
         return buildErrorResponse(e, HttpStatus.INTERNAL_SERVER_ERROR, req);
     }
 
+    /**
+     * Handle file not found response entity.
+     *
+     * @param e   the e
+     * @param req the req
+     * @return the response entity
+     */
     @ExceptionHandler(FileNotFoundException.class)
     public ResponseEntity<ApiError> handleFileNotFound(FileNotFoundException e, HttpServletRequest req) {
         return buildErrorResponse(e, HttpStatus.NOT_FOUND, req);
     }
 
+    /**
+     * Handle invalid notification type response entity.
+     *
+     * @param e   the e
+     * @param req the req
+     * @return the response entity
+     */
     @ExceptionHandler(InvalidNotificationTypeException.class)
     public ResponseEntity<ApiError> handleInvalidNotificationType(InvalidNotificationTypeException e, HttpServletRequest req) {
         return buildErrorResponse(e, HttpStatus.BAD_REQUEST, req);
     }
 
+    /**
+     * Handle invalid registration code response entity.
+     *
+     * @param e   the e
+     * @param req the req
+     * @return the response entity
+     */
     @ExceptionHandler(InvalidRegistrationCodeException.class)
     public ResponseEntity<ApiError> handleInvalidRegistrationCode(InvalidRegistrationCodeException e, HttpServletRequest req) {
         return buildErrorResponse(e, HttpStatus.NOT_FOUND, req);
     }
 
+    /**
+     * Handle activated registration code response entity.
+     *
+     * @param e   the e
+     * @param req the req
+     * @return the response entity
+     */
     @ExceptionHandler(ActivatedRegistrationCodeException.class)
     public ResponseEntity<ApiError> handleActivatedRegistrationCode(ActivatedRegistrationCodeException e, HttpServletRequest req) {
         return buildErrorResponse(e, HttpStatus.BAD_REQUEST, req);
     }
 
+    /**
+     * Handle invalid token response entity.
+     *
+     * @param e   the e
+     * @param req the req
+     * @return the response entity
+     */
     @ExceptionHandler(InvalidTokenException.class)
     public ResponseEntity<ApiError> handleInvalidToken(InvalidTokenException e, HttpServletRequest req) {
         return buildErrorResponse(e, HttpStatus.BAD_REQUEST, req);
     }
 
+    /**
+     * Handle reg code not found response entity.
+     *
+     * @param e   the e
+     * @param req the req
+     * @return the response entity
+     */
     @ExceptionHandler(RegCodeNotFound.class)
     public ResponseEntity<ApiError> handleRegCodeNotFound(RegCodeNotFound e, HttpServletRequest req) {
         return buildErrorResponse(e, HttpStatus.NOT_FOUND, req);
     }
 
+    /**
+     * Handle invalid jwt token format response entity.
+     *
+     * @param e   the e
+     * @param req the req
+     * @return the response entity
+     */
     @ExceptionHandler(InvalidJwtTokenFormat.class)
     public ResponseEntity<ApiError> handleInvalidJwtTokenFormat(InvalidJwtTokenFormat e, HttpServletRequest req) {
         return buildErrorResponse(e, HttpStatus.UNAUTHORIZED, req);

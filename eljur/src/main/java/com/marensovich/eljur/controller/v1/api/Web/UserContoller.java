@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * The type User contoller.
+ */
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserContoller {
@@ -28,6 +31,12 @@ public class UserContoller {
     private ProfileService profileService;
 
 
+    /**
+     * Gets username by token.
+     *
+     * @param token the token
+     * @return the username by token
+     */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @GetMapping("/getUsernameByToken")
     public ResponseEntity<?> getUsernameByToken(@RequestParam String token) {
@@ -44,6 +53,12 @@ public class UserContoller {
         }
     }
 
+    /**
+     * Gets i dby username.
+     *
+     * @param username the username
+     * @return the i dby username
+     */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @GetMapping("/getIDbyUsername")
     public ResponseEntity<?> getIDbyUsername(@RequestParam String username) {
@@ -54,6 +69,12 @@ public class UserContoller {
         return ResponseEntity.ok().body(Map.of("username", user.getUsername()));
     }
 
+    /**
+     * Gets all user info.
+     *
+     * @param id the id
+     * @return the all user info
+     */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @GetMapping("/getAllInfo")
     public ResponseEntity<?> getAllUserInfo(@RequestParam Integer id) {

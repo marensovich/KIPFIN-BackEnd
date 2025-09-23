@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Map;
 
 
+/**
+ * The type Scores controller.
+ */
 @RestController
 @RequestMapping("/api/v1/scores")
 public class ScoresController {
@@ -26,6 +29,13 @@ public class ScoresController {
     @Autowired
     private JwtUtil jwtUtil;
 
+    /**
+     * Gets scores.
+     *
+     * @param token the token
+     * @param half  the half
+     * @return the scores
+     */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @GetMapping("/getScores")
     public ResponseEntity<?> getScores(
@@ -44,6 +54,13 @@ public class ScoresController {
         }
     }
 
+    /**
+     * Gets final scores.
+     *
+     * @param token the token
+     * @param year  the year
+     * @return the final scores
+     */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @GetMapping("/getFinalScores")
     public ResponseEntity<?> getFinalScores(

@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+/**
+ * The type Auth controller.
+ */
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -27,6 +30,13 @@ public class AuthController {
     @Autowired
     private JwtUtil jwtUtil;
 
+    /**
+     * Login response entity.
+     *
+     * @param login    the login
+     * @param password the password
+     * @return the response entity
+     */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @PostMapping("/login")
     public ResponseEntity<?> login(
@@ -45,6 +55,15 @@ public class AuthController {
         ));
     }
 
+    /**
+     * Register response entity.
+     *
+     * @param key      the key
+     * @param login    the login
+     * @param password the password
+     * @param request  the request
+     * @return the response entity
+     */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestParam String key, @RequestParam String login, @RequestParam String password, HttpServletRequest request) {
@@ -56,6 +75,12 @@ public class AuthController {
         }
     }
 
+    /**
+     * Logout response entity.
+     *
+     * @param response the response
+     * @return the response entity
+     */
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletResponse response) {
         Cookie cookie = new Cookie("token", null);

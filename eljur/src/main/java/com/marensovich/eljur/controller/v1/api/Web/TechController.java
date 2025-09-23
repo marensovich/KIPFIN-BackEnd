@@ -20,6 +20,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+/**
+ * The type Tech controller.
+ */
 @RestController
 @RequestMapping("/api/v1/tech")
 public class TechController {
@@ -32,6 +35,11 @@ public class TechController {
     @Autowired
     private StatRepository statRepository;
 
+    /**
+     * Gets database info.
+     *
+     * @return the database info
+     */
     @GetMapping("/database")
     public Map<String, Object> getDatabaseInfo() {
         String databaseSize = techService.getDatabaseSize();
@@ -47,6 +55,11 @@ public class TechController {
         );
     }
 
+    /**
+     * Gets cpu usage.
+     *
+     * @return the cpu usage
+     */
     @GetMapping("/cpu")
     public Map<String, Object> getCpuUsage() {
         double cpuUsage = techService.getCpuUsage();
@@ -57,17 +70,32 @@ public class TechController {
         );
     }
 
+    /**
+     * Gets memory usage.
+     *
+     * @return the memory usage
+     */
     @GetMapping("/memory")
     public Map<String, Object> getMemoryUsage() {
         return techService.getMemoryUsage();
     }
 
+    /**
+     * Gets uptime.
+     *
+     * @return the uptime
+     */
     @GetMapping("/uptime")
     public Map<String, Object> getUptime() {
         String uptime = techService.getUptime();
         return Map.of("uptime", uptime);
     }
 
+    /**
+     * Gets os info.
+     *
+     * @return the os info
+     */
     @GetMapping("/os")
     public Map<String, Object> getOsInfo() {
         String osName = techService.getOsName();
@@ -83,30 +111,56 @@ public class TechController {
         );
     }
 
+    /**
+     * Gets visits last 10 minutes.
+     *
+     * @return the visits last 10 minutes
+     */
     @GetMapping("/visitsLast10Minutes")
     public Map<String, Object> getVisitsLast10Minutes() {
         int visits = visitService.getVisitsLast10Minutes();
         return Map.of("visitsLast10Minutes", visits);
     }
 
+    /**
+     * Gets visits last hour.
+     *
+     * @return the visits last hour
+     */
     @GetMapping("/visitsLastHour")
     public Map<String, Object> getVisitsLastHour() {
         int visits = visitService.getVisitsLastHour();
         return Map.of("visitsLastHour", visits);
     }
 
+    /**
+     * Gets visits last 12 hours.
+     *
+     * @return the visits last 12 hours
+     */
     @GetMapping("/visitsLast12Hours")
     public Map<String, Object> getVisitsLast12Hours() {
         int visits = visitService.getVisitsLast12Hours();
         return Map.of("visitsLast12Hours", visits);
     }
 
+    /**
+     * Gets visits last day.
+     *
+     * @return the visits last day
+     */
     @GetMapping("/visitsLastDay")
     public Map<String, Object> getVisitsLastDay() {
         int visits = visitService.getVisitsLastDay();
         return Map.of("visitsLastDay", visits);
     }
 
+    /**
+     * Gets graph data.
+     *
+     * @param range the range
+     * @return the graph data
+     */
     @GetMapping("/graph")
     public Map<String, Object> getGraphData(@RequestParam(required = false, defaultValue = "24h") String range) {
         LocalDateTime now = LocalDateTime.now();
@@ -171,6 +225,12 @@ public class TechController {
         return startTime;
     }
 
+    /**
+     * Gets all stats.
+     *
+     * @param range the range
+     * @return the all stats
+     */
     @GetMapping("/all")
     public Map<String, Object> getAllStats(@RequestParam(required = false, defaultValue = "24h") String range) {
         LocalDateTime now = LocalDateTime.now();

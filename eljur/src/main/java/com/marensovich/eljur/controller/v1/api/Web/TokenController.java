@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * The type Token controller.
+ */
 @RestController
 @RequestMapping("/api/v1/token")
 public class TokenController {
@@ -16,6 +19,12 @@ public class TokenController {
     @Autowired
     private JwtUtil jwtUtil;
 
+    /**
+     * Validate token response entity.
+     *
+     * @param token the token
+     * @return the response entity
+     */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @GetMapping("/validateToken")
     public ResponseEntity<?> validateToken(@RequestParam String token) {

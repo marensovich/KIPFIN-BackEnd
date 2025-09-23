@@ -6,6 +6,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * The type Files.
+ */
 @Data
 @Table(name = "files")
 @Entity

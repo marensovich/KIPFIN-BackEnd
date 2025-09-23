@@ -10,16 +10,30 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * The type File service.
+ */
 @Service
 public class FileService {
 
 
     private final FilesRepository filesRepository;
 
+    /**
+     * Instantiates a new File service.
+     *
+     * @param filesRepository the files repository
+     */
     public FileService(FilesRepository filesRepository) {
         this.filesRepository = filesRepository;
     }
 
+    /**
+     * Gets file name with id.
+     *
+     * @param IDs the ds
+     * @return the file name with id
+     */
     public Map<String, String> getFileNameWithID(String IDs) {
         Map<String, String> files = new HashMap<>();
         for (String ID : IDs.split(",")) {
@@ -31,6 +45,15 @@ public class FileService {
         return files;
     }
 
+    /**
+     * Upload file files.
+     *
+     * @param userID   the user id
+     * @param file     the file
+     * @param fileType the file type
+     * @return the files
+     * @throws IOException the io exception
+     */
     public Files uploadFile(Integer userID, MultipartFile file, String fileType) throws IOException {
         Files newFile = new Files();
         newFile.setUserID(userID);

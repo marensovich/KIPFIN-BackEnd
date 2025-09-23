@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * The type Teacher.
+ */
 @Data
 @Entity
 @Table(name = "teacher")

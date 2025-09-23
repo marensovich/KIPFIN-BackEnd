@@ -11,17 +11,31 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * The type Telegram bot notifier.
+ */
 public class TelegramBotNotifier {
 
     private final String botToken;
     private final String chatId;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    /**
+     * Instantiates a new Telegram bot notifier.
+     *
+     * @param botToken the bot token
+     * @param chatId   the chat id
+     */
     public TelegramBotNotifier(String botToken, String chatId) {
         this.botToken = botToken;
         this.chatId = chatId;
     }
 
+    /**
+     * Send message.
+     *
+     * @param message the message
+     */
     public void sendMessage(String message) {
         try {
             Map<String, Object> payload = Map.of(
@@ -64,6 +78,12 @@ public class TelegramBotNotifier {
         }
     }
 
+    /**
+     * Escape markdown v 2 string.
+     *
+     * @param text the text
+     * @return the string
+     */
     public static String escapeMarkdownV2(String text) {
         return text
                 .replace("\\", "\\\\")

@@ -16,6 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * The type Files controller.
+ */
 @RestController
 @RequestMapping("/api/v1/files")
 public class FilesController {
@@ -26,6 +29,14 @@ public class FilesController {
     private FileService fileService;
 
 
+    /**
+     * Upload file response entity.
+     *
+     * @param file     the file
+     * @param userID   the user id
+     * @param fileType the file type
+     * @return the response entity
+     */
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(
             @RequestParam("file") MultipartFile file,
@@ -41,6 +52,12 @@ public class FilesController {
         }
     }
 
+    /**
+     * Download file response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @GetMapping("/download/{id}")
     public ResponseEntity<byte[]> downloadFile(@PathVariable Integer id) {
         Optional<Files> fileOptional = filesRepository.findById(id);

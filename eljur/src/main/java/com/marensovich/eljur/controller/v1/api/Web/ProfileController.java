@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * The type Profile controller.
+ */
 @RestController
 @RequestMapping("/api/v1/profile")
 public class ProfileController {
@@ -25,6 +28,17 @@ public class ProfileController {
     @Autowired
     private ProfileService profileService;
 
+    /**
+     * Sets notification settings.
+     *
+     * @param token                the token
+     * @param notificationType     the notification type
+     * @param notificationMessages the notification messages
+     * @param notificationHomework the notification homework
+     * @param notificationScore    the notification score
+     * @param notificationNews     the notification news
+     * @return the notification settings
+     */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @GetMapping("/setNotificationSettings")
     public ResponseEntity<?> setNotificationSettings(@RequestParam String token,
@@ -57,6 +71,13 @@ public class ProfileController {
         }
     }
 
+    /**
+     * Sets profile image.
+     *
+     * @param token    the token
+     * @param filename the filename
+     * @return the profile image
+     */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @GetMapping("/setProfileImage")
     public ResponseEntity<?> setProfileImage(@RequestParam String token, String filename) {
@@ -68,8 +89,14 @@ public class ProfileController {
         user.get().setProfileImage(filename);
         return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Settings successfully applied"));
     }
-    
 
+
+    /**
+     * Profile info response entity.
+     *
+     * @param token the token
+     * @return the response entity
+     */
     @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
     @GetMapping("/getProfileInfo")
     public ResponseEntity<?> profileInfo(@RequestParam String token) {
