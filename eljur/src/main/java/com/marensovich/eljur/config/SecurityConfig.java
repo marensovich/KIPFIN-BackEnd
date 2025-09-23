@@ -29,8 +29,9 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/api/auth/**", "/api/lessons/**", "/api/images/**").permitAll()
-                        .anyRequest().permitAll())
+                        .requestMatchers("/api/v1/**").permitAll()
+                        .requestMatchers("/api/v1/telegram/**", "/api/v1/mobile/**").denyAll()
+                        .anyRequest().denyAll())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
@@ -42,11 +43,11 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder(); // Используем BCrypt для хэширования паролей
     }
 
-    private String getClientIp(HttpServletRequest request) {
-        String xfHeader = request.getHeader("X-Forwarded-For");
-        if (xfHeader != null && !xfHeader.isEmpty()) {
-            return xfHeader.split(",")[0]; // Возвращаем первый IP из заголовка X-Forwarded-For
-        }
-        return request.getRemoteAddr(); // Возвращаем удаленный IP
-    }
+//    public String getClientIp(HttpServletRequest request) {
+//        String xfHeader = request.getHeader("X-Forwarded-For");
+//        if (xfHeader != null && !xfHeader.isEmpty()) {
+//            return xfHeader.split(",")[0]; // Возвращаем первый IP из заголовка X-Forwarded-For
+//        }
+//        return request.getRemoteAddr(); // Возвращаем удаленный IP
+//    }
 }
