@@ -16,21 +16,51 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * The type Jwt util.
+ * Utility class for generating, validating, and parsing JWT tokens.
+ * <p>
+ * This service handles token creation with user claims, validation of expiration,
+ * and extraction of user ID from JWT tokens.
+ * </p>
+ *
+ * @author marensovich
+ * @version v.0.1
+ * @since v.0.1
  */
 @Service
 public class JwtUtil {
 
+    /**
+     * Secret key used for signing JWT tokens.
+     * Loaded from application properties.
+     *
+     * @since v.0.1
+     */
     @Value("${jwt.secret}")
     private String secretKey;
 
+    /**
+     * Token expiration time in milliseconds.
+     * Loaded from application properties.
+     *
+     * @since v.0.1
+     */
     @Value("${jwt.expiration}")
     private long expiration;
 
+    /**
+     * Secret key object used for signing JWTs.
+     *
+     * @since v.0.1
+     */
     private Key key;
 
     /**
-     * Init.
+     * Initializes the signing key after the bean is constructed.
+     * <p>
+     * Throws an exception if the secret key is not configured properly.
+     * </p>
+     *
+     * @since v.0.1
      */
     @PostConstruct
     public void init() {
@@ -45,19 +75,25 @@ public class JwtUtil {
     }
 
     /**
-     * Generate token string.
+     * Generates a JWT token containing the user ID as a claim.
      *
-     * @param userId the user id
-     * @return the string
+     * @param userId the ID of the user
+     * @return a signed JWT token string
+     * @since v.0.1
      */
-// Генерация токена с userId
     public String generateToken(Integer userId) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("userId", userId); // Добавляем userId в claims
+        claims.put("userId", userId);
         return createToken(claims);
     }
 
-    // Создание токена
+    /**
+     * Creates a JWT token with the given claims.
+     *
+     * @param claims the claims to include in the token
+     * @return a signed JWT token string
+     * @since v.0.1
+     */
     private String createToken(Map<String, Object> claims) {
         return Jwts.builder()
                 .setClaims(claims)
@@ -68,27 +104,29 @@ public class JwtUtil {
     }
 
     /**
-     * Validate token boolean.
+     * Validates a JWT token by checking its signature and expiration date.
      *
-     * @param token the token
-     * @return the boolean
+     * @param token the JWT token to validate
+     * @return {@code true} if the token is valid, {@code false} otherwise
+     * @since v.0.1
      */
-// Валидация токена
     public boolean validateToken(String token) {
         try {
             Claims claims = extractAllClaims(token);
             Date expiration = claims.getExpiration();
-            if (expiration.before(new Date())) {
-                return false;
-            } else {
-                return true;
-            }
+            return !expiration.before(new Date());
         } catch (Exception e) {
             return false;
         }
     }
 
-    // Извлечение всех claims из токена
+    /**
+     * Extracts all claims from a JWT token.
+     *
+     * @param token the JWT token
+     * @return a {@link Claims} object containing all claims
+     * @since v.0.1
+     */
     private Claims extractAllClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(key)
@@ -98,17 +136,25 @@ public class JwtUtil {
     }
 
     /**
-     * Gets user id from token.
+     * Extracts the user ID from a JWT token.
      *
-     * @param token the token
-     * @return the user id from token
+     * @param token the JWT token
+     * @return the user ID stored in the token claims
+     * @since v.0.1
      */
-// Извлечение userId из токена
     public Integer getUserIdFromToken(String token) {
         return extractClaim(token, claims -> claims.get("userId", Integer.class));
     }
 
-    // Общий метод для извлечения claims
+    /**
+     * Extracts a specific claim from a JWT token using a resolver function.
+     *
+     * @param <T> the type of the claim
+     * @param token the JWT token
+     * @param claimsResolver a function to extract the desired claim
+     * @return the extracted claim value
+     * @since v.0.1
+     */
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);

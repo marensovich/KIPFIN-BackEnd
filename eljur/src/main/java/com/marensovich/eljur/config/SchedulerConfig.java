@@ -4,7 +4,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
- * The type Scheduler config.
+ * Configuration class for scheduling tasks.
+ * <p>
+ * Enables Spring's scheduled task execution.
+ * </p>
+ *
+ * @author marensovich
+ * @version 0.1
+ * @since 0.1
  */
 @Configuration
 @EnableScheduling

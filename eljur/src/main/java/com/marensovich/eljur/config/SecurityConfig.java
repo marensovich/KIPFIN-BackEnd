@@ -12,7 +12,14 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
- * The type Security config.
+ * Security configuration class.
+ * <p>
+ * Configures JWT authentication, session management, CORS, CSRF, and password encoding.
+ * </p>
+ *
+ * @author marensovich
+ * @version v.0.1
+ * @since v.0.1
  */
 @Configuration
 public class SecurityConfig {
@@ -20,21 +27,22 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     /**
-     * Instantiates a new Security config.
+     * Constructs the security configuration with a JWT filter.
      *
-     * @param jwtAuthenticationFilter the jwt authentication filter
+     * @param jwtAuthenticationFilter the JWT authentication filter
+     * @since v.0.1
      */
     public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
-
     /**
-     * Security filter chain security filter chain.
+     * Configures the security filter chain.
      *
-     * @param http the http
-     * @return the security filter chain
-     * @throws Exception the exception
+     * @param http the {@link HttpSecurity} object
+     * @return the configured {@link SecurityFilterChain}
+     * @throws Exception if any error occurs during configuration
+     * @since v.0.1
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -52,20 +60,13 @@ public class SecurityConfig {
     }
 
     /**
-     * Password encoder password encoder.
+     * Configures password encoding using BCrypt.
      *
-     * @return the password encoder
+     * @return a {@link PasswordEncoder} instance
+     * @since v.0.1
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Используем BCrypt для хэширования паролей
+        return new BCryptPasswordEncoder();
     }
-
-//    public String getClientIp(HttpServletRequest request) {
-//        String xfHeader = request.getHeader("X-Forwarded-For");
-//        if (xfHeader != null && !xfHeader.isEmpty()) {
-//            return xfHeader.split(",")[0]; // Возвращаем первый IP из заголовка X-Forwarded-For
-//        }
-//        return request.getRemoteAddr(); // Возвращаем удаленный IP
-//    }
 }

@@ -1,28 +1,41 @@
 package com.marensovich.eljur.config.TelegramNotifier;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * The type Telegram bot config.
+ * Configuration class for the Telegram bot.
+ * <p>
+ * Loads bot token and chat ID from environment variables and
+ * provides a {@link TelegramBotNotifier} bean for sending messages.
+ * </p>
+ *
+ * @author marensovich
+ * @version v.0.1
+ * @since v.0.1
  */
 @Configuration
 public class TelegramBotConfig {
 
     /**
-     * The Bot token.
+     * Telegram bot token, loaded from environment variable TELEGRAM_LOGGER_TOKEN.
+     *
+     * @since v.0.1
      */
     String botToken = System.getenv("TELEGRAM_LOGGER_TOKEN");
+
     /**
-     * The Chat id.
+     * Telegram chat ID, loaded from environment variable TELEGRAM_LOGGER_CHAT_ID.
+     *
+     * @since v.0.1
      */
     String chatId = System.getenv("TELEGRAM_LOGGER_CHAT_ID");
 
     /**
-     * Telegram bot notifier telegram bot notifier.
+     * Creates a {@link TelegramBotNotifier} bean with the configured bot token and chat ID.
      *
-     * @return the telegram bot notifier
+     * @return a configured {@link TelegramBotNotifier} instance
+     * @since v.0.1
      */
     @Bean
     public TelegramBotNotifier telegramBotNotifier() {

@@ -13,6 +13,9 @@ import java.io.IOException;
 
 /**
  * The type Jwt authentication filter.
+ * @author marensovich
+ * @since v.0.1
+ * @version v.0.1
  */
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -21,7 +24,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     /**
      * Instantiates a new Jwt authentication filter.
-     *
+     * @since v.0.1
      * @param jwtUtil the jwt util
      */
     public JwtAuthenticationFilter(JwtUtil jwtUtil) {
@@ -42,9 +45,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    // Извлечение токена из заголовка или куки
+
+    /**
+     * Method to extract cookie or token from header
+     * @since v.0.1
+     * @param request Request to server
+     * @return cookie or token from header
+     */
     private String extractToken(HttpServletRequest request) {
-        // Проверяем заголовок Authorization
         String header = request.getHeader("Authorization");
         if (header != null && header.startsWith("Bearer ")) {
             return header.substring(7);

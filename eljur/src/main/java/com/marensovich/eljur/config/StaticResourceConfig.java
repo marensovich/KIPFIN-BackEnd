@@ -6,15 +6,23 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * The type Static resource config.
+ * Configuration class for serving static resources.
+ * <p>
+ * Maps the "/static/**" URL path to the classpath resources under "classpath:/static/".
+ * </p>
+ *
+ * @author marensovich
+ * @version 0.1
+ * @since 0.1
  */
 @Configuration
 public class StaticResourceConfig {
 
     /**
-     * Web mvc configurer web mvc configurer.
+     * Configures resource handlers for static files.
      *
-     * @return the web mvc configurer
+     * @return a {@link WebMvcConfigurer} with resource handler settings
+     * @since 0.1
      */
     @Bean
     public WebMvcConfigurer webMvcConfigurer() {
@@ -27,4 +35,3 @@ public class StaticResourceConfig {
         };
     }
 }
-
