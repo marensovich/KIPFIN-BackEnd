@@ -1,33 +1,23 @@
 package com.marensovich.eljur.data;
 
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * The enum Final scores type.
+ * Represents final grades in the academic system.
+ *
+ * <p>Includes both numeric values (2–5) and "not attested" (NA).</p>
+ *
+ * @author marensovich
+ * @version v.0.1
+ * @since v.0.1
  */
 public enum FinalScoresType {
 
-    /**
-     * Two final scores type.
-     */
     TWO(2, "Два"),
-    /**
-     * Three final scores type.
-     */
     THREE(3, "Три"),
-    /**
-     * Four final scores type.
-     */
     FOUR(4, "Четыре"),
-    /**
-     * Five final scores type.
-     */
     FIVE(5, "Пять"),
-    /**
-     * Na final scores type.
-     */
     NA(0, "Не аттестован");
 
     private final int numericValue;
@@ -39,7 +29,7 @@ public enum FinalScoresType {
     }
 
     /**
-     * Gets numeric value.
+     * Gets numeric value of the grade.
      *
      * @return the numeric value
      */
@@ -48,7 +38,7 @@ public enum FinalScoresType {
     }
 
     /**
-     * Gets description.
+     * Gets description of the grade.
      *
      * @return the description
      */
@@ -57,19 +47,19 @@ public enum FinalScoresType {
     }
 
     /**
-     * Is not attested boolean.
+     * Checks if the grade means "not attested".
      *
-     * @return the boolean
+     * @return true if NA, false otherwise
      */
     public boolean isNotAttested() {
         return this == NA;
     }
 
     /**
-     * From string final scores type.
+     * Creates a FinalScoresType from string value.
      *
-     * @param value the value
-     * @return the final scores type
+     * @param value string value ("Два", "Пять", etc.)
+     * @return corresponding FinalScoresType
      */
     public static FinalScoresType fromString(String value) {
         for (FinalScoresType score : FinalScoresType.values()) {
@@ -81,18 +71,18 @@ public enum FinalScoresType {
     }
 
     /**
-     * Gets all scores.
+     * Returns all grade types.
      *
-     * @return the all scores
+     * @return list of all scores
      */
     public static List<FinalScoresType> getAllScores() {
         return List.of(FinalScoresType.values());
     }
 
     /**
-     * Gets all descriptions.
+     * Returns all grade descriptions.
      *
-     * @return the all descriptions
+     * @return list of descriptions
      */
     public static List<String> getAllDescriptions() {
         return List.of(FinalScoresType.values()).stream()
@@ -101,10 +91,10 @@ public enum FinalScoresType {
     }
 
     /**
-     * From numeric value final scores type.
+     * Creates a FinalScoresType from numeric value.
      *
-     * @param numericValue the numeric value
-     * @return the final scores type
+     * @param numericValue numeric value (2–5)
+     * @return corresponding FinalScoresType
      */
     public static FinalScoresType fromNumericValue(int numericValue) {
         for (FinalScoresType score : FinalScoresType.values()) {

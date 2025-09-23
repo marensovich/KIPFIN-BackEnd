@@ -4,19 +4,27 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- * The enum Date of half year.
+ * Represents the academic half-years with their start and end dates.
+ *
+ * <p>Each constant stores the date range of one semester (half of the study year).
+ * Used in scheduling, grade reports, and other date-related operations.</p>
+ *
+ * @author marensovich
+ * @version v.0.1
+ * @since v.0.1
  */
 public enum DateOfHalfYear {
 
     /**
-     * First date of half year.
+     * First half of the year (September–December).
      */
     FIRST(
             LocalDate.parse("01.09.2025", DateTimeFormatter.ofPattern("dd.MM.yyyy")),
             LocalDate.parse("29.12.2025", DateTimeFormatter.ofPattern("dd.MM.yyyy"))
     ),
+
     /**
-     * Second date of half year.
+     * Second half of the year (January–July).
      */
     SECOND(
             LocalDate.parse("13.01.2026", DateTimeFormatter.ofPattern("dd.MM.yyyy")),
@@ -32,7 +40,7 @@ public enum DateOfHalfYear {
     }
 
     /**
-     * Gets start date.
+     * Gets the start date of the half-year.
      *
      * @return the start date
      */
@@ -41,7 +49,7 @@ public enum DateOfHalfYear {
     }
 
     /**
-     * Gets end date.
+     * Gets the end date of the half-year.
      *
      * @return the end date
      */

@@ -1,44 +1,22 @@
 package com.marensovich.eljur.data;
 
-
 /**
- * The enum Files data type.
+ * Represents the types of file data used in the system.
+ *
+ * <p>Used to categorize uploaded files by their type.</p>
+ *
+ * @author marensovich
+ * @version v.0.1
+ * @since v.0.1
  */
 public enum FilesDataType {
-    /**
-     * Book files data type.
-     */
     Book,
-    /**
-     * Award files data type.
-     */
     Award,
-    /**
-     * Avatar files data type.
-     */
     Avatar,
-    /**
-     * Photo files data type.
-     */
     Photo,
-    /**
-     * Video files data type.
-     */
     Video,
-    /**
-     * Power point files data type.
-     */
     PowerPoint,
-    /**
-     * Word files data type.
-     */
     Word,
-    /**
-     * Excel files data type.
-     */
     Excel,
-    /**
-     * Music files data type.
-     */
     Music
 }

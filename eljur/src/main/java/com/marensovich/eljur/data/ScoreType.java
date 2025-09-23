@@ -1,24 +1,15 @@
 package com.marensovich.eljur.data;
 
 /**
- * The enum Score type.
+ * Represents basic grade types (2–5).
+ *
+ * <p>Used for regular assessments in the system.</p>
  */
 public enum ScoreType {
-    /**
-     * Two score type.
-     */
+
     TWO(2),
-    /**
-     * Three score type.
-     */
     THREE(3),
-    /**
-     * Four score type.
-     */
     FOUR(4),
-    /**
-     * Five score type.
-     */
     FIVE(5);
 
     private final int score;
@@ -28,12 +19,11 @@ public enum ScoreType {
     }
 
     /**
-     * Gets score.
+     * Gets numeric score.
      *
-     * @return the score
+     * @return the score value
      */
     public int getScore() {
         return score;
     }
-
 }

@@ -1,20 +1,12 @@
 package com.marensovich.eljur.data;
 
-
 /**
- * The enum Notification type.
+ * Represents notification delivery types.
+ *
+ * <p>Defines how the system sends notifications to users.</p>
  */
 public enum NotificationType {
-    /**
-     * Without notification notification type.
-     */
     Without_Notification,
-    /**
-     * Email notification type.
-     */
     Email,
-    /**
-     * Telegram notification type.
-     */
     Telegram
 }
