@@ -21,6 +21,9 @@ import java.util.Map;
 import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
+/**
+ * The type Score service.
+ */
 @Service
 public class ScoreService {
 
@@ -36,6 +39,13 @@ public class ScoreService {
     private FinalScoresRepository finalScoresRepository;
 
 
+    /**
+     * Get final scores map.
+     *
+     * @param user the user
+     * @param year the year
+     * @return the map
+     */
     public Map<String, Object> getFinalScores(User user, int year){
         List<FinalScores> finalScores = finalScoresRepository.findByUserIDAndYear(user.getId(), Year.of(year));
         Map<String, Map<String, Object>> result = new HashMap<>();
@@ -78,6 +88,13 @@ public class ScoreService {
         return response;
     }
 
+    /**
+     * Get scores map.
+     *
+     * @param user the user
+     * @param half the half
+     * @return the map
+     */
     public Map<String, List<Map<String, Object>>> getScores(User user, int half){
         LocalDate startDate = null;
         LocalDate endDate = switch (half) {
@@ -122,6 +139,12 @@ public class ScoreService {
         return scoresBySubject;
     }
 
+    /**
+     * Gets avg score by user id.
+     *
+     * @param userID the user id
+     * @return the avg score by user id
+     */
     public Double getAvgScoreByUserID(Integer userID) {
         List<String> scoreStrings = scoreRepository.getScoreListByUserID(userID);
 
@@ -146,6 +169,13 @@ public class ScoreService {
         return avgScore;
     }
 
+    /**
+     * Gets avg score by subject.
+     *
+     * @param subjectID the subject id
+     * @param userID    the user id
+     * @return the avg score by subject
+     */
     public Double getAvgScoreBySubject(Integer subjectID, Integer userID) {
         List<String> scoreStrings = scoreRepository.getScoreListByUserIDAndSubject(userID, subjectID);
 
@@ -170,6 +200,12 @@ public class ScoreService {
         return avgScore;
     }
 
+    /**
+     * Convert score type to int integer.
+     *
+     * @param scoreType the score type
+     * @return the integer
+     */
     public Integer convertScoreTypeToInt(String scoreType) {
         try {
             return ScoreType.valueOf(scoreType).getScore();
@@ -178,6 +214,12 @@ public class ScoreService {
         }
     }
 
+    /**
+     * Convert score work type to string string.
+     *
+     * @param workType the work type
+     * @return the string
+     */
     public String convertScoreWorkTypeToString(String workType) {
         try {
             return ScoreWorkType.valueOf(workType).getScoreWorkType();

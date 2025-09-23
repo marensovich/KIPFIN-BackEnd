@@ -16,6 +16,19 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * REST controller for handling file operations.
+ *
+ * <p>This controller provides endpoints for:
+ * <ul>
+ *     <li>Uploading files</li>
+ *     <li>Downloading files by ID</li>
+ * </ul>
+ *
+ * @author marensovich
+ * @version v.0.1
+ * @since v.0.1
+ */
 @RestController
 @RequestMapping("/api/v1/files")
 public class FilesController {
@@ -26,6 +39,15 @@ public class FilesController {
     private FileService fileService;
 
 
+    /**
+     * Uploads a new file and stores it in the database.
+     *
+     * @param file     the uploaded file
+     * @param userID   the ID of the user who uploads the file
+     * @param fileType the type of the file
+     * @return the response entity containing the file ID or error message
+     * @since v.0.1
+     */
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(
             @RequestParam("file") MultipartFile file,
@@ -41,6 +63,14 @@ public class FilesController {
         }
     }
 
+    /**
+     * Downloads a file by its ID.
+     *
+     * @param id the ID of the file
+     * @return the response entity with the file as a byte array
+     * @throws FileNotFoundException if the file does not exist
+     * @since v.0.1
+     */
     @GetMapping("/download/{id}")
     public ResponseEntity<byte[]> downloadFile(@PathVariable Integer id) {
         Optional<Files> fileOptional = filesRepository.findById(id);

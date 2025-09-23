@@ -14,6 +14,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * REST controller for managing user profiles.
+ *
+ * <p>This controller provides endpoints for:
+ * <ul>
+ *     <li>Updating notification settings</li>
+ *     <li>Changing profile images</li>
+ *     <li>Fetching profile information</li>
+ * </ul>
+ *
+ * Authentication is based on JWT tokens.
+ *
+ * @author marensovich
+ * @version v.0.1
+ * @since v.0.1
+ */
 @RestController
 @RequestMapping("/api/v1/profile")
 public class ProfileController {
@@ -25,7 +41,20 @@ public class ProfileController {
     @Autowired
     private ProfileService profileService;
 
-    @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
+    /**
+     * Updates user notification settings.
+     *
+     * @param token                the JWT token of the user
+     * @param notificationType     the type of notifications
+     * @param notificationMessages whether to enable/disable message notifications
+     * @param notificationHomework whether to enable/disable homework notifications
+     * @param notificationScore    whether to enable/disable score notifications
+     * @param notificationNews     whether to enable/disable news notifications
+     * @return the response entity with success or error message
+     * @throws UserNotFoundException if the user does not exist
+     * @since v.0.1
+     */
+    @CrossOrigin(origins = "http://202.181.188.160:25998", allowCredentials = "true")
     @GetMapping("/setNotificationSettings")
     public ResponseEntity<?> setNotificationSettings(@RequestParam String token,
                                                      @RequestParam(required = false) String notificationType,
@@ -57,7 +86,16 @@ public class ProfileController {
         }
     }
 
-    @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
+    /**
+     * Updates the profile image for the user.
+     *
+     * @param token    the JWT token of the user
+     * @param filename the image file name
+     * @return the response entity with success message
+     * @throws UserNotFoundException if the user does not exist
+     * @since v.0.1
+     */
+    @CrossOrigin(origins = "http://202.181.188.160:25998", allowCredentials = "true")
     @GetMapping("/setProfileImage")
     public ResponseEntity<?> setProfileImage(@RequestParam String token, String filename) {
         Integer userID = jwtUtil.getUserIdFromToken(token);
@@ -68,9 +106,17 @@ public class ProfileController {
         user.get().setProfileImage(filename);
         return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Settings successfully applied"));
     }
-    
 
-    @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
+
+    /**
+     * Retrieves profile information of the user.
+     *
+     * @param token the JWT token of the user
+     * @return the response entity containing profile info
+     * @throws UserNotFoundException if the user does not exist
+     * @since v.0.1
+     */
+    @CrossOrigin(origins = "http://202.181.188.160:25998", allowCredentials = "true")
     @GetMapping("/getProfileInfo")
     public ResponseEntity<?> profileInfo(@RequestParam String token) {
         Integer userID = jwtUtil.getUserIdFromToken(token);

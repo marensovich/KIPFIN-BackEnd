@@ -1,8 +1,6 @@
 package com.marensovich.eljur.config;
 
 import com.marensovich.eljur.config.JWT.JwtAuthenticationFilter;
-import com.marensovich.eljur.config.JWT.JwtUtil;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -13,16 +11,39 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Security configuration class.
+ * <p>
+ * Configures JWT authentication, session management, CORS, CSRF, and password encoding.
+ * </p>
+ *
+ * @author marensovich
+ * @version v.0.1
+ * @since v.0.1
+ */
 @Configuration
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
+    /**
+     * Constructs the security configuration with a JWT filter.
+     *
+     * @param jwtAuthenticationFilter the JWT authentication filter
+     * @since v.0.1
+     */
     public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
-
+    /**
+     * Configures the security filter chain.
+     *
+     * @param http the {@link HttpSecurity} object
+     * @return the configured {@link SecurityFilterChain}
+     * @throws Exception if any error occurs during configuration
+     * @since v.0.1
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -31,23 +52,21 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/api/v1/**").permitAll()
                         .requestMatchers("/api/v1/telegram/**", "/api/v1/mobile/**").denyAll()
-                        .anyRequest().denyAll())
+                        .anyRequest().permitAll())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
+    /**
+     * Configures password encoding using BCrypt.
+     *
+     * @return a {@link PasswordEncoder} instance
+     * @since v.0.1
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Используем BCrypt для хэширования паролей
+        return new BCryptPasswordEncoder();
     }
-
-//    public String getClientIp(HttpServletRequest request) {
-//        String xfHeader = request.getHeader("X-Forwarded-For");
-//        if (xfHeader != null && !xfHeader.isEmpty()) {
-//            return xfHeader.split(",")[0]; // Возвращаем первый IP из заголовка X-Forwarded-For
-//        }
-//        return request.getRemoteAddr(); // Возвращаем удаленный IP
-//    }
 }

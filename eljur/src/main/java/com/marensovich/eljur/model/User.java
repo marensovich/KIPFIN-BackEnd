@@ -6,6 +6,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * The type User.
+ */
 @Data
 @Entity
 @Table(name = "user")

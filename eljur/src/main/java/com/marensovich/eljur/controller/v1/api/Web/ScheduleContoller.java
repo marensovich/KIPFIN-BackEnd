@@ -14,6 +14,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * REST controller for managing lessons and schedules.
+ *
+ * <p>This controller provides endpoints for:
+ * <ul>
+ *     <li>Fetching lessons for a user in a date range</li>
+ * </ul>
+ *
+ * Visits are recorded automatically when schedule is retrieved.
+ *
+ * @author marensovich
+ * @version v.0.1
+ * @since v.0.1
+ */
 @RestController
 @RequestMapping("/api/v1/lessons")
 public class ScheduleContoller {
@@ -24,7 +38,17 @@ public class ScheduleContoller {
     @Autowired private UserRepository userRepository;
 
 
-    @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
+    /**
+     * Retrieves user lessons for the given date range.
+     *
+     * @param token     the JWT token of the user
+     * @param startDate the start date of the schedule
+     * @param endDate   the end date of the schedule
+     * @return the response entity containing grouped lessons
+     * @throws UserNotFoundException if the user does not exist
+     * @since v.0.1
+     */
+    @CrossOrigin(origins = "http://202.181.188.160:25998", allowCredentials = "true")
     @GetMapping("/getLessons")
     public ResponseEntity<?> getLessons(
             @RequestParam String token,

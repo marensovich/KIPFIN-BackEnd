@@ -6,6 +6,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * The type Admins.
+ */
 @Entity
 @Data
 @Table(name = "admin")

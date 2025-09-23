@@ -27,7 +27,7 @@ public class ProfileController {
     private ProfileService profileService;
 
 
-    @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
+    @CrossOrigin(origins = "http://202.181.188.160:25998", allowCredentials = "true")
     @GetMapping("/getProfileInfo")
     public ResponseEntity<?> profileInfo(@RequestParam String token) {
         Integer userID = jwtUtil.getUserIdFromToken(token);

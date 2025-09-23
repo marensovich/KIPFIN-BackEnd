@@ -6,6 +6,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * The type Homework.
+ */
 @Data
 @Entity
 @Table(name = "homework")

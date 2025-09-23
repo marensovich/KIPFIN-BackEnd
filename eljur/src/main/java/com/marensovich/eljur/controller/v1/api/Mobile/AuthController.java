@@ -39,7 +39,7 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Авторизация успешна!"));
     }
 
-    @CrossOrigin(origins = "http://199.83.103.127:25323", allowCredentials = "true")
+    @CrossOrigin(origins = "http://202.181.188.160:25998", allowCredentials = "true")
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestParam String key, @RequestParam String login, @RequestParam String password, HttpServletRequest request) {
         authService.registrationUser(key, login, password, request);

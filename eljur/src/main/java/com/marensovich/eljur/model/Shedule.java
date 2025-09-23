@@ -6,6 +6,9 @@ import lombok.Data;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+/**
+ * The type Shedule.
+ */
 @Data
 @Entity
 @Table(name = "schedule")

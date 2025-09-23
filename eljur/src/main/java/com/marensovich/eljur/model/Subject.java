@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * The type Subject.
+ */
 @Data
 @Entity
 @Table(name = "subject")

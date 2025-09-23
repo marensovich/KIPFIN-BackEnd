@@ -6,7 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * The interface Attedance repository.
+ */
 @Repository
 public interface AttedanceRepository extends JpaRepository<Attendance, String> {
+
     Optional<Attendance> findById(String id);
 }

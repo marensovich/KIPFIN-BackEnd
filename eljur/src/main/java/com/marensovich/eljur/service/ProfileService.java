@@ -15,6 +15,9 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * The type Profile service.
+ */
 @Service
 public class ProfileService {
 
@@ -26,6 +29,16 @@ public class ProfileService {
     @Autowired private AdminRepostory adminRepostory;
 
 
+    /**
+     * Set notification settings.
+     *
+     * @param user                 the user
+     * @param notificationType     the notification type
+     * @param notificationMessages the notification messages
+     * @param notificationHomework the notification homework
+     * @param notificationScore    the notification score
+     * @param notificationNews     the notification news
+     */
     public void setNotificationSettings(
             Optional<User> user,
             @Nullable String notificationType,
@@ -58,6 +71,12 @@ public class ProfileService {
         userRepository.save(user.get());
     }
 
+    /**
+     * Gets profile info.
+     *
+     * @param user the user
+     * @return the profile info
+     */
     public Map getProfileInfo(Optional<User> user) {
         return Map.ofEntries(
                 Map.entry("fullname", user.get().getFullname() != null ? user.get().getFullname() : "Не указано"),

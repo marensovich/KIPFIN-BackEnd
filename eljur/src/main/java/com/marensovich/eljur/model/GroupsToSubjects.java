@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * The type Groups to subjects.
+ */
 @Data
 @Entity
 @Table(name = "GroupsToSubject")

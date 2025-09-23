@@ -17,6 +17,9 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+/**
+ * The type Shedule service.
+ */
 @Service
 public class SheduleService {
 
@@ -37,6 +40,14 @@ public class SheduleService {
     @Autowired
     private FileService fileService;
 
+    /**
+     * Get lessons tree map.
+     *
+     * @param user      the user
+     * @param startDate the start date
+     * @param endDate   the end date
+     * @return the tree map
+     */
     public TreeMap<String, TreeMap<Integer, Map<String, Object>>> getLessons(User user,
                            String startDate,
                            String endDate){

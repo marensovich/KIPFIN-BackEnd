@@ -10,11 +10,21 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+/**
+ * The type User details service.
+ */
 @Service
 public class UserDetailsService {
 
     @Autowired private UserRepository userRepository;
 
+    /**
+     * Load user by username user details.
+     *
+     * @param username the username
+     * @return the user details
+     * @throws UsernameNotFoundException the username not found exception
+     */
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
         if (user == null) {

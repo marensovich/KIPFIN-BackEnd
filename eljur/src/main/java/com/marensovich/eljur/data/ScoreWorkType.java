@@ -1,5 +1,10 @@
 package com.marensovich.eljur.data;
 
+/**
+ * Represents the types of academic work for which scores can be assigned.
+ *
+ * <p>Each constant stores a human-readable description.</p>
+ */
 public enum ScoreWorkType {
 
     Digital_Homework_Assignment("Цифровое домашнее задание"),
@@ -32,6 +37,11 @@ public enum ScoreWorkType {
         this.scoreWorkType = scoreWorkType;
     }
 
+    /**
+     * Gets the description of the work type.
+     *
+     * @return the description string
+     */
     public String getScoreWorkType() {
         return scoreWorkType;
     }

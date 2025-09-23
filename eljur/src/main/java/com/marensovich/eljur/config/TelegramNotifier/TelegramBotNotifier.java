@@ -11,17 +11,62 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Notifier for sending messages to a Telegram chat using a bot.
+ * <p>
+ * This class provides functionality to send messages with MarkdownV2 formatting
+ * to a configured chat ID via the Telegram Bot API.
+ * </p>
+ *
+ * @author marensovich
+ * @version v.0.1
+ * @since v.0.1
+ */
 public class TelegramBotNotifier {
 
+    /**
+     * Telegram bot token used to authenticate requests.
+     *
+     * @since v.0.1
+     */
     private final String botToken;
+
+    /**
+     * Telegram chat ID to which messages will be sent.
+     *
+     * @since v.0.1
+     */
     private final String chatId;
+
+    /**
+     * ObjectMapper for serializing payloads to JSON.
+     *
+     * @since v.0.1
+     */
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    /**
+     * Creates a new Telegram bot notifier.
+     *
+     * @param botToken the bot token for authentication
+     * @param chatId the chat ID where messages will be sent
+     * @since v.0.1
+     */
     public TelegramBotNotifier(String botToken, String chatId) {
         this.botToken = botToken;
         this.chatId = chatId;
     }
 
+    /**
+     * Sends a message to the configured Telegram chat.
+     * <p>
+     * The message is sent in MarkdownV2 format. Any exceptions are logged to
+     * standard error.
+     * </p>
+     *
+     * @param message the message text to send
+     * @since v.0.1
+     */
     public void sendMessage(String message) {
         try {
             Map<String, Object> payload = Map.of(
@@ -64,6 +109,17 @@ public class TelegramBotNotifier {
         }
     }
 
+    /**
+     * Escapes a string for MarkdownV2 formatting.
+     * <p>
+     * All special MarkdownV2 characters are escaped so that they appear literally
+     * in the Telegram message.
+     * </p>
+     *
+     * @param text the input text
+     * @return the escaped text suitable for MarkdownV2
+     * @since v.0.1
+     */
     public static String escapeMarkdownV2(String text) {
         return text
                 .replace("\\", "\\\\")
