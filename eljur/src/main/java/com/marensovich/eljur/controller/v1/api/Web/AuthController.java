@@ -2,6 +2,7 @@ package com.marensovich.eljur.controller.v1.api.Web;
 
 import com.marensovich.eljur.config.JWT.JwtUtil;
 import com.marensovich.eljur.exceptions.Exceptions.InvalidPasswordException;
+import com.marensovich.eljur.exceptions.Exceptions.InvalidTokenException;
 import com.marensovich.eljur.exceptions.Exceptions.UserNotFoundException;
 import com.marensovich.eljur.model.User;
 import com.marensovich.eljur.repository.UserRepository;
@@ -107,13 +108,26 @@ public class AuthController {
      * @since v.0.1
      */
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(HttpServletResponse response) {
-        Cookie cookie = new Cookie("token", null);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true);
-        cookie.setPath("/");
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
-        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Logout Successful!"));
+    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("token".equals(cookie.getName())) {
+                    String token = cookie.getValue();
+                    if (token == null || token.isEmpty() || !jwtUtil.validateToken(token)) {
+                        throw new InvalidTokenException("Token is empty or invalid");
+                    }
+                    cookie.setValue(null);
+                    cookie.setHttpOnly(true);
+                    cookie.setSecure(true);
+                    cookie.setPath("/");
+                    cookie.setMaxAge(0);
+                    response.addCookie(cookie);
+                    return ResponseEntity.ok(Map.of("message", "Logout Successful!"));
+                }
+            }
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "You are not logged in!"));
     }
+
 }
