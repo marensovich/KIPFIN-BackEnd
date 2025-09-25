@@ -4,42 +4,40 @@ import com.marensovich.eljur.data.ScoreType;
 import com.marensovich.eljur.data.ScoreWorkType;
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.io.Serializable;
 import java.time.LocalDate;
 
-/**
- * The type Score.
- */
 @Entity
 @Data
 @Table(name = "score")
-public class Score implements Serializable {
+public class Score {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "scoreId", nullable = false, unique = true)
+    @Column(name = "id")
     private Integer id;
 
-    @Column(name = "scoreUserID", nullable = false)
-    private Integer userID;
-    @Column(name = "scoreLessonID", nullable = false)
-    private Integer lessonID;
-    @Column(name = "scoreSubjectID", nullable = false)
-    private Integer subjectID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId", nullable = false)
+    private User user;
+
+    @Column(name = "lessonId", nullable = false)
+    private Integer lessonId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subjectId", nullable = false)
+    private Subject subject;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "scoreType", nullable = false)
-    private ScoreType scoreType;
+    @Column(name = "type", nullable = false, length = 45)
+    private ScoreType type;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "scoreWork", nullable = false)
-    private ScoreWorkType scoreWork;
+    @Column(name = "workType", nullable = false, length = 45)
+    private ScoreWorkType workType;
 
-    @Column(name = "scoreText")
-    private String scoreText;
+    @Column(name = "text", nullable = false, columnDefinition = "TEXT")
+    private String text;
 
-    @Column(name = "scoreDate", nullable = false)
+    @Column(name = "date", nullable = false)
     private LocalDate date;
-
 }

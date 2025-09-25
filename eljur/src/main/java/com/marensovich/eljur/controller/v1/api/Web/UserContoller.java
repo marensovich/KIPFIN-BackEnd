@@ -80,7 +80,7 @@ public class UserContoller {
     @CrossOrigin(origins = "http://202.181.188.160:25998", allowCredentials = "true")
     @GetMapping("/getIDbyUsername")
     public ResponseEntity<?> getIDbyUsername(@RequestParam String username) {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findUserByUsername(username);
 
         if (user == null) throw new UserNotFoundException("User not found");
 

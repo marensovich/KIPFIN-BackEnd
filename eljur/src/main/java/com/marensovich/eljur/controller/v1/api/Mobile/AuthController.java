@@ -31,7 +31,7 @@ public class AuthController {
             @RequestParam String login,
             @RequestParam String password
     ) {
-        User user = userRepository.getByUsernameMobile(login);
+        User user = userRepository.getUserByUsername(login);
 
         if (user == null) throw new UserNotFoundException("User not found");
         if (!password.equals(user.getPassword())) throw new InvalidPasswordException("Incorrect password");

@@ -13,13 +13,5 @@ import java.util.List;
 @Repository
 public interface GroupsToSubjectRepository extends JpaRepository<GroupsToSubjects, Integer> {
 
-    /**
-     * Gets all subjects by group id.
-     *
-     * @param groupId the group id
-     * @return the all subjects by group id
-     */
-    @Query("SELECT g.subjectId FROM GroupsToSubjects g WHERE g.groupId = :groupId")
-    List<Integer> getAllSubjectsByGroupId(Integer groupId);
-
+    List<Integer> getAllSubjectsByGroup_Id(Integer groupId);
 }

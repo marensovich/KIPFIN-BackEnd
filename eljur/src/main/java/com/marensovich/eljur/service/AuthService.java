@@ -1,19 +1,19 @@
 package com.marensovich.eljur.service;
 
 import com.marensovich.eljur.data.NotificationType;
+import com.marensovich.eljur.data.PostTypes;
+import com.marensovich.eljur.data.RegKeysStatus;
 import com.marensovich.eljur.exceptions.Exceptions.ActivatedRegistrationCodeException;
 import com.marensovich.eljur.exceptions.Exceptions.InvalidRegistrationCodeException;
 import com.marensovich.eljur.exceptions.Exceptions.RegCodeNotFound;
 import com.marensovich.eljur.model.*;
-import com.marensovich.eljur.repository.RegKeysRepository;
-import com.marensovich.eljur.repository.StudentsRepository;
-import com.marensovich.eljur.repository.TeacherRepository;
-import com.marensovich.eljur.repository.UserRepository;
+import com.marensovich.eljur.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -27,6 +27,8 @@ public class AuthService {
     @Autowired private StudentsRepository studentsRepository;
     @Autowired private TeacherRepository teacherRepository;
     @Autowired private UserRepository userRepository;
+    @Autowired
+    private GroupsRepository groupsRepository;
 
     //private PasswordEncoder passwordEncoder;
 
@@ -40,10 +42,12 @@ public class AuthService {
      * @param request  the request
      */
     public void registrationUser(String key, String login, String password, HttpServletRequest request) {
+        //todo: update method, add getting code and email by regKeys
         String code = regKeysService.findRegistrationKey(key);
         String email = regKeysService.getEmailByRegistrationKey(key);
-        RegKeys regKeys = regKeysRepository.findByRegistrationKey(key)
-                .orElseThrow(() -> { throw new  RegCodeNotFound("Registration code not found."); });
+        RegKeys regKeys = regKeysRepository.findByKey(key)
+                .orElseThrow(() -> new RegCodeNotFound("Registration code not found."));
+
         if (code == null) {
             throw new InvalidRegistrationCodeException("Invalid registration code.");
         } else if (regKeysService.getStatusByRegistrationKey(key).equals("Activated")) {
@@ -51,46 +55,57 @@ public class AuthService {
         }
         Timestamp timestamp = new Timestamp(new Date().getTime());
         regKeys.setEmail(email);
-        regKeys.setStatus("Activated");
-        regKeys.setActivatedAt(timestamp);
-        String post = regKeys.getPost();
+        regKeys.setStatus(RegKeysStatus.USED);
+        regKeys.setActivateAt(LocalDateTime.now());
+        PostTypes post = regKeys.getPost();
         User user = new User();
         user.setEmail(email);
         user.setPhone(regKeys.getPhone());
         user.setPassword(password);
         user.setUsername(login);
         user.setGroup(regKeys.getGroup());
-        user.setFullname(regKeys.getFullName());
+        user.setFullname(regKeys.getFullname());
         user.setRegIP(request.getRemoteAddr());
         user.setPost(post);
-        user.setLastJoinIP(request.getRemoteAddr());
-        user.setNotificationType(NotificationType.Without_Notification);
-        user.setNotificationHomework(false);
-        user.setNotificationMessages(false);
-        user.setNotificationNews(false);
-        user.setNotificationScore(false);
-        user.setBlack_theme(false);
+        user.setLastIP(request.getRemoteAddr());
         userRepository.save(user);
         switch (post) {
-            case "student" -> {
+            case student -> {
                 Students student = new Students();
-                student.setFullname(regKeys.getFullName());
+                student.setFullname(regKeys.getFullname());
                 student.setGroup(regKeys.getGroup());
                 student.setSubgroup(regKeys.getSubgroup());
                 student.setId(user.getId());
                 studentsRepository.save(student);
             }
-            case "teacher" -> {
+            case teacher -> {
                 Teacher teacher = new Teacher();
                 teacher.setId(user.getId());
-                teacher.setTeacher_groupID(regKeys.getGroup());
+                teacher.setGroup(regKeys.getGroup());
                 teacherRepository.save(teacher);
             }
-            case "admin" -> {
+            case admin -> {
                 Admins admin = new Admins();
                 admin.setId(user.getId());
             }
         }
+    }
+
+
+    public void test(){
+        User user = new User();
+        user.setUsername("eljur");
+        user.setPassword("eljur");
+        user.setEmail("eljur@eljur.com");
+        user.setRegIP("0.0.0.0");
+        user.setFullname("Eljur");
+        user.setPhone("+1234567890");
+        user.setTelegramId(123123132L);
+        user.setPost(PostTypes.admin);
+        user.setGroup(groupsRepository.getGroupsById(1));
+        user.setLastIP("127.0.0.1");
+
+        userRepository.save(user);
     }
 
 }

@@ -69,6 +69,15 @@ public class AuthController {
         ));
     }
 
+    @CrossOrigin(origins = "http://202.181.188.160:25998", allowCredentials = "true")
+    @PostMapping("/test")
+    public ResponseEntity<?> test() {
+        authService.test();
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of(
+                "message", "Test success!"
+        ));
+    }
+
     /**
      * Registers a new user with a provided key.
      *

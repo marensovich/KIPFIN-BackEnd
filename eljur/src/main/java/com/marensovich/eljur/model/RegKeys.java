@@ -1,53 +1,51 @@
 package com.marensovich.eljur.model;
 
+import com.marensovich.eljur.data.PostTypes;
+import com.marensovich.eljur.data.RegKeysStatus;
 import jakarta.persistence.*;
 import lombok.Data;
+import java.time.LocalDateTime;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
-
-
-/**
- * The type Reg keys.
- */
 @Data
 @Entity
 @Table(name = "regKeys")
-public class RegKeys implements Serializable {
+public class RegKeys {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "regKeys_id", nullable = false, unique = true)
+    @Column(name = "id", nullable = false, unique = true)
     private Integer id;
 
-    @Column(name = "regKeys_key", nullable = false, unique = true)
-    private String registrationKey;
+    @Column(name = "key", nullable = false, length = 45)
+    private String key;
 
-    @Column(name = "regKeys_FullName", nullable = false, unique = true)
-    private String fullName;
+    @Column(name = "fullname", nullable = false, length = 100)
+    private String fullname;
 
-    @Column(name = "regKeys_Email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false, length = 45)
     private String email;
 
-    @Column(name = "regKeys_Status", nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false, length = 45)
+    private RegKeysStatus status = RegKeysStatus.PENDING;
 
-    @Column(name = "regKeys_CreatedAt", nullable = false)
-    private Timestamp createdAt;
+    @Column(name = "activateAt", nullable = false)
+    private LocalDateTime activateAt;
 
-    @Column(name = "regKeys_ActivatedAt")
-    private Timestamp activatedAt;
-
-    @Column(name = "regKeys_Phone", nullable = false, unique = true)
+    @Column(name = "phone", nullable = false, length = 45)
     private String phone;
 
-    @Column(name = "regKeys_Post", nullable = false, unique = false)
-    private String post;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "post", nullable = false, length = 45)
+    private PostTypes post = PostTypes.student;
 
-    @Column(name = "regKeys_group", nullable = true)
-    private Integer group;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "`group`", nullable = true)
+    private Groups group;
 
-    @Column(name = "regKeys_subgroup", nullable = true)
+    @Column(name = "subgroup", nullable = true)
     private Integer subgroup;
 
+    public boolean isExpired() {
+        return activateAt.isBefore(LocalDateTime.now());
+    }
 }

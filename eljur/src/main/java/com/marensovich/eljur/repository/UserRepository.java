@@ -15,41 +15,9 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    @Query(value = "SELECT * FROM user WHERE user_id = :id", nativeQuery = true)
-    Optional<User> findById(Integer id);
+    User getUserById(Integer id);
 
-    /**
-     * Find by fullname user.
-     *
-     * @param fullname the fullname
-     * @return the user
-     */
-    User findByFullname(String fullname);
-
-
-    /**
-     * Gets fullname by user id
-     * @param teacherID the teacher id
-     * @return the fullname by user id
-     */
-    @Query(value = "SELECT user_full_name FROM user WHERE user_id = :teacherID", nativeQuery = true)
-    String getFullnameByUser_id(@Param("teacherID") Integer teacherID);
-
-
-    /**
-     * Gets by username mobile.
-     *
-     * @param username the username
-     * @return the by username mobile
-     */
-    @Query(value = "SELECT * FROM user WHERE user_username = :username", nativeQuery = true)
-    User getByUsernameMobile(@Param("username") String username);
-
-    /**
-     * Find by username user.
-     *
-     * @param username the user username
-     * @return the user
-     */
     User findUserByUsername(String username);
+
+    User getUserByUsername(String username);
 }

@@ -14,12 +14,5 @@ import java.util.List;
 @Repository
 public interface StatRepository extends JpaRepository<StatRecord, Long> {
 
-    /**
-     * Find stats since list.
-     *
-     * @param startTime the start time
-     * @return the list
-     */
-    @Query("SELECT s FROM StatRecord s WHERE s.timestamp >= :startTime ORDER BY s.timestamp ASC")
-    List<StatRecord> findStatsSince(LocalDateTime startTime);
+    List<StatRecord> findByTimestampAfter(LocalDateTime timestampAfter);
 }

@@ -61,7 +61,7 @@ public class TechService {
      * @return the stats for time range
      */
     public List<StatRecord> getStatsForTimeRange(LocalDateTime startTime) {
-        return statRepository.findStatsSince(startTime);
+        return statRepository.findByTimestampAfter(startTime);
     }
 
     /**

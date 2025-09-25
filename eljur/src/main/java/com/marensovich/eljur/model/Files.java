@@ -4,33 +4,30 @@ import com.marensovich.eljur.data.FilesDataType;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.io.Serializable;
-
-/**
- * The type Files.
- */
 @Data
-@Table(name = "files")
 @Entity
-public class Files implements Serializable {
+@Table(name = "files")
+public class Files {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, unique = true)
+    @Column(name = "id")
     private Integer id;
 
-    @Column(name = "userID", nullable = false)
-    private Integer userID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userID", nullable = false)
+    private User user;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "FileType", nullable = false)
-    private FilesDataType filetype;
+    @Column(name = "FileType", nullable = false, length = 45)
+    private FilesDataType fileType;
 
-    @Column(name = "filename", nullable = false)
+    @Column(name = "filename", nullable = false, length = 45)
     private String filename;
 
     @Lob
     @Column(name = "file", nullable = false, columnDefinition = "LONGBLOB")
     private byte[] file;
+    
 
 }

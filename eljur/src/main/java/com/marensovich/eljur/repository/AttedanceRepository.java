@@ -12,5 +12,4 @@ import java.util.Optional;
 @Repository
 public interface AttedanceRepository extends JpaRepository<Attendance, String> {
 
-    Optional<Attendance> findById(String id);
 }

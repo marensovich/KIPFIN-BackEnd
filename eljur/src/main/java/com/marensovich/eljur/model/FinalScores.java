@@ -1,37 +1,32 @@
 package com.marensovich.eljur.model;
 
-import com.marensovich.eljur.data.FinalScoresType;
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.io.Serializable;
 import java.time.Year;
 
-/**
- * The type Final scores.
- */
 @Data
 @Entity
 @Table(name = "finalScores")
-public class FinalScores implements Serializable {
+public class FinalScores {
+
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Integer id;
 
-    @Column(name = "userID", nullable = false)
-    private Integer userID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userID", nullable = false)
+    private User user;
 
-    @Column(name = "subjectID", nullable = false)
-    private Integer subjectID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subjectID", nullable = false)
+    private Subject subject;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "result", nullable = false)
-    private FinalScoresType result;
+    @Column(name = "result", nullable = false, length = 45)
+    private String result;
 
     @Column(name = "half", nullable = false)
     private Integer half;
 
-    @Column(name = "year", nullable = false)
-    private Year year;
-
+    @Column(name = "year", nullable = false, columnDefinition = "YEAR")
+    private Integer year;
 }
