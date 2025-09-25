@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "messages") // Исправлено: было "private_messages"
+@Table(name = "messages")
 public class Messages {
 
     @Id

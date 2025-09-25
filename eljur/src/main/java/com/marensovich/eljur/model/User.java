@@ -12,6 +12,7 @@ import java.util.List;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
     private Integer id;
 
@@ -41,10 +42,10 @@ public class User {
     private PostTypes post;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "groupId", nullable = false)
+    @JoinColumn(name = "groupId")
     private Groups group;
 
-    @Column(name = "telegramId", nullable = false)
+    @Column(name = "telegramId")
     private Long telegramId;
 
     // Связи

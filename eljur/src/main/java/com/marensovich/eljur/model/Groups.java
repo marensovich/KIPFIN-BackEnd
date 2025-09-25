@@ -11,6 +11,7 @@ import java.util.List;
 public class Groups {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
@@ -50,5 +51,5 @@ public class Groups {
             inverseJoinColumns = @JoinColumn(name = "subject_id")
     )
     private List<Subject> subjects = new ArrayList<>();
-    
+
 }

@@ -12,10 +12,11 @@ import java.time.LocalDateTime;
 public class RegKeys {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
     private Integer id;
 
-    @Column(name = "key", nullable = false, length = 45)
+    @Column(name = "`key`", nullable = false, length = 45)
     private String key;
 
     @Column(name = "fullname", nullable = false, length = 100)

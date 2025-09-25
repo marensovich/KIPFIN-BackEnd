@@ -6,10 +6,11 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "admin")
+@Table(name = "admins")
 public class Admins {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 

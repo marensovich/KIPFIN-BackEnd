@@ -12,6 +12,7 @@ import java.util.List;
 public class Students {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
