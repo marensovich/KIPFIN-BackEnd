@@ -1,8 +1,5 @@
 package com.marensovich.eljur;
 
-import com.marensovich.eljur.data.PostTypes;
-import com.marensovich.eljur.model.User;
-import com.marensovich.eljur.service.AuthService;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

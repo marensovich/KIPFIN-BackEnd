@@ -1,6 +1,6 @@
 package com.marensovich.eljur.model;
 
-import com.marensovich.eljur.data.FilesDataType;
+import com.marensovich.eljur.data.system.FilesDataType;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -28,6 +28,6 @@ public class Files {
     @Lob
     @Column(name = "file", nullable = false, columnDefinition = "LONGBLOB")
     private byte[] file;
-    
+
 
 }

@@ -14,7 +14,9 @@
           <factory-entry name="eljur.main" value="fddeffc4-5816-4685-9e40-ac1da9df035c" />
           <factory-entry name="entityManagerFactory" />
         </datasource-mapping>
-        <naming-strategy-map />
+        <naming-strategy-map>
+          <unit-entry name="entityManagerFactory" />
+        </naming-strategy-map>
       </configuration>
     </facet>
   </component>

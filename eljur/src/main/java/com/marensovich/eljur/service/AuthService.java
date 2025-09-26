@@ -1,8 +1,7 @@
 package com.marensovich.eljur.service;
 
-import com.marensovich.eljur.data.NotificationType;
-import com.marensovich.eljur.data.PostTypes;
-import com.marensovich.eljur.data.RegKeysStatus;
+import com.marensovich.eljur.data.system.PostTypes;
+import com.marensovich.eljur.data.system.RegKeysStatus;
 import com.marensovich.eljur.exceptions.Exceptions.ActivatedRegistrationCodeException;
 import com.marensovich.eljur.exceptions.Exceptions.InvalidRegistrationCodeException;
 import com.marensovich.eljur.exceptions.Exceptions.RegCodeNotFound;

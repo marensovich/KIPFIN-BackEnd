@@ -1,6 +1,6 @@
 package com.marensovich.eljur.model;
 
-import com.marensovich.eljur.data.PostTypes;
+import com.marensovich.eljur.data.system.PostTypes;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.ArrayList;

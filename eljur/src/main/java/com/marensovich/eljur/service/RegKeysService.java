@@ -1,7 +1,7 @@
 package com.marensovich.eljur.service;
 
 
-import com.marensovich.eljur.data.RegKeysStatus;
+import com.marensovich.eljur.data.system.RegKeysStatus;
 import com.marensovich.eljur.model.RegKeys;
 import com.marensovich.eljur.repository.RegKeysRepository;
 import org.springframework.beans.factory.annotation.Autowired;

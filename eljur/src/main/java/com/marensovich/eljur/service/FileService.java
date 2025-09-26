@@ -1,7 +1,7 @@
 package com.marensovich.eljur.service;
 
 
-import com.marensovich.eljur.data.FilesDataType;
+import com.marensovich.eljur.data.system.FilesDataType;
 import com.marensovich.eljur.model.Files;
 import com.marensovich.eljur.repository.FilesRepository;
 import com.marensovich.eljur.repository.UserRepository;

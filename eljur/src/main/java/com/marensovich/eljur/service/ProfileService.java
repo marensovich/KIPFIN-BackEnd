@@ -1,7 +1,7 @@
 package com.marensovich.eljur.service;
 
-import com.marensovich.eljur.data.NotificationType;
-import com.marensovich.eljur.data.PostTypes;
+import com.marensovich.eljur.data.system.NotificationType;
+import com.marensovich.eljur.data.system.PostTypes;
 import com.marensovich.eljur.exceptions.Exceptions.InvalidNotificationTypeException;
 import com.marensovich.eljur.exceptions.Exceptions.UserNotFoundException;
 import com.marensovich.eljur.model.*;

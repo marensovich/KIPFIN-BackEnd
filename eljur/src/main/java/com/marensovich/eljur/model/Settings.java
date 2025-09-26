@@ -1,6 +1,6 @@
 package com.marensovich.eljur.model;
 
-import com.marensovich.eljur.data.NotificationType;
+import com.marensovich.eljur.data.system.NotificationType;
 import jakarta.persistence.*;
 import lombok.Data;
 

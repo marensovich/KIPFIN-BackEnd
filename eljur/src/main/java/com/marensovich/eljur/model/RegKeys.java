@@ -1,7 +1,7 @@
 package com.marensovich.eljur.model;
 
-import com.marensovich.eljur.data.PostTypes;
-import com.marensovich.eljur.data.RegKeysStatus;
+import com.marensovich.eljur.data.system.PostTypes;
+import com.marensovich.eljur.data.system.RegKeysStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
