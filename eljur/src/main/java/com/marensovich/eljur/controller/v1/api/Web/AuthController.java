@@ -55,8 +55,8 @@ public class AuthController {
     @CrossOrigin(origins = "http://202.181.188.160:25998", allowCredentials = "true")
     @PostMapping("/login")
     public ResponseEntity<?> login(
-            @RequestParam String login,
-            @RequestParam String password
+            @RequestBody String login,
+            @RequestBody String password
     ) {
         User user = userRepository.findUserByUsername(login);
         if (user == null) throw new UserNotFoundException("User not found");
@@ -91,7 +91,11 @@ public class AuthController {
      */
     @CrossOrigin(origins = "http://202.181.188.160:25998", allowCredentials = "true")
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestParam String key, @RequestParam String login, @RequestParam String password, HttpServletRequest request) {
+    public ResponseEntity<?> register(
+            @RequestBody String key,
+            @RequestBody String login,
+            @RequestBody String password,
+            HttpServletRequest request) {
         try {
             authService.registrationUser(key, login, password, request);
             return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "You have successfully registered!"));
