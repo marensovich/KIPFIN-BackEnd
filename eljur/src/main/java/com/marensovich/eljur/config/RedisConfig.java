@@ -8,11 +8,11 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
- * Configuration class for Redis.
+ * Redis configuration class.
  * <p>
- * Provides a {@link RedisTemplate} bean for interacting with Redis.
+ * Provides a {@link RedisTemplate} bean for interacting with Redis using
+ * String keys and Object values serialized as JSON.
  * </p>
- *
  * @author marensovich
  * @version 0.1
  * @since 0.1
@@ -21,10 +21,10 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig {
 
     /**
-     * Configures a RedisTemplate with String keys and values.
+     * Creates a RedisTemplate with String keys and Object values.
      *
      * @param connectionFactory the Redis connection factory
-     * @return a {@link RedisTemplate} instance
+     * @return configured RedisTemplate instance
      * @since 0.1
      */
     @Bean
@@ -32,8 +32,7 @@ public class RedisConfig {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
         template.setKeySerializer(new StringRedisSerializer());
-        template.setValueSerializer(new Jackson2JsonRedisSerializer<Object>(Object.class));
-
+        template.setValueSerializer(new Jackson2JsonRedisSerializer<>(Object.class));
         return template;
     }
 }

@@ -5,9 +5,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+/**
+ * REST controller for Redis operations.
+ * @version 0.1
+ * @since 0.1
+ * @author marensovich
+ */
 @RestController
 @RequestMapping("api/v1/redis")
 public class RedisController {
+
     private final RedisService redisService;
 
     public RedisController(RedisService redisService) {
@@ -21,13 +28,12 @@ public class RedisController {
     }
 
     @GetMapping("/get")
-    public String get(@RequestParam String key) {
+    public Object get(@RequestParam String key) {
         return redisService.getValue(key);
     }
 
     @GetMapping("/all")
-    public Map<String, String> getAll() {
+    public Map<String, Object> getAll() {
         return redisService.getAllKeyValues();
     }
-
 }
