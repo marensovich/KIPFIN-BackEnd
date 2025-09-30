@@ -1,65 +1,89 @@
 package com.marensovich.eljur.model;
 
-import com.marensovich.eljur.data.NotificationType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.marensovich.eljur.data.system.PostTypes;
 import jakarta.persistence.*;
 import lombok.Data;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.io.Serializable;
-
-/**
- * The type User.
- */
 @Data
 @Entity
-@Table(name = "user")
-public class User implements Serializable {
-    private static final long serialVersionUID = 1L;
+@Table(name = "users")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", nullable = false, unique = true)
+    @Column(name = "id", nullable = false, unique = true)
     private Integer id;
 
-
-    @Column(name = "user_username", nullable = false, unique = true)
+    @Column(name = "username", nullable = false, unique = true, length = 30)
     private String username;
-    @Column(name = "user_email", nullable = false, unique = true)
+
+    @Column(name = "email", nullable = false, unique = true, length = 45)
     private String email;
-    @Column(name = "user_password", nullable = false, unique = true)
+
+    @Column(name = "password", nullable = false, length = 255)
     private String password;
-    @Column(name = "user_regIP", nullable = false)
+
+    @Column(name = "regIP", nullable = false, length = 15)
     private String regIP;
-    @Column(name = "user_LastJoinIP", nullable = false)
-    private String lastJoinIP;
-    @Column(name = "user_FullName", nullable = false, unique = true)
+
+    @Column(name = "lastIP", nullable = false, length = 15)
+    private String lastIP;
+
+    @Column(name = "fullname", nullable = false, length = 45)
     private String fullname;
-    @Column(name = "user_phone", nullable = false, unique = true)
+
+    @Column(name = "phone", nullable = false, length = 45)
     private String phone;
-    @Column(name = "user_post", nullable = false)
-    private String post;
-    @Column(name = "user_groupID", nullable = true)
-    private Integer group;
-    @Column(name = "user_TelegramID", nullable = true, unique = true)
-    private Long telegramID;
-    @Column(name = "user_ProfileImage", nullable = true)
-    private String profileImage;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "user_notificationType", nullable = false)
-    private NotificationType notificationType;
+    @Column(name = "post", nullable = false, length = 45)
+    private PostTypes post;
 
-    @Column(name = "user_notificationHomework", nullable = false)
-    private boolean notificationHomework;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "groupId")
+    private Groups group;
 
-    @Column(name = "user_notificationScore", nullable = false)
-    private boolean notificationScore;
+    @Column(name = "telegramId")
+    private Long telegramId;
 
-    @Column(name = "user_notificationNews", nullable = false)
-    private boolean notificationNews;
+    // Связи
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private Settings settings;
 
-    @Column(name = "user_notificationMessages", nullable = false)
-    private boolean notificationMessages;
 
-    @Column(name = "user_BlackTheme", nullable = false)
-    private boolean black_theme;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Files> files = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Attendance> attendanceRecords = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Score> scores = new ArrayList<>();
+
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Messages> sentMessages = new ArrayList<>();
+
+    @OneToMany(mappedBy = "target", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Messages> receivedMessages = new ArrayList<>();
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Students student;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Teacher teacher;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Admins admin;
+
+    @PrePersist
+    public void createSettings() {
+        if (this.settings == null) {
+            this.settings = new Settings();
+            this.settings.setUser(this);
+        }
+    }
 }

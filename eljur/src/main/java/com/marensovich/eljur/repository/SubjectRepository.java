@@ -14,39 +14,19 @@ import java.util.Optional;
  */
 @Repository
 public interface SubjectRepository extends JpaRepository<Subject, String> {
-    /**
-     * Find by subject name optional.
-     *
-     * @param subjectName the subject name
-     * @return the optional
-     */
-    Optional<Subject> findBySubjectName(String subjectName);
 
-    /**
-     * Find by id optional.
-     *
-     * @param id the id
-     * @return the optional
-     */
-    Optional<Subject> findById(Integer id);
+    Subject getSubjectById(Integer id);
 
-    /**
-     * Gets subject name by id.
-     *
-     * @param id the id
-     * @return the subject name by id
-     */
-    @Query("SELECT s.subjectName FROM Subject s WHERE s.id = :id")
+    @Query("SELECT s.name FROM Subject s WHERE s.id IN :ids")
+    List<String> getSubjectNamesByIds(@Param("ids") List<Integer> ids);
+
+    // ✅ Альтернатива: возвращать полные объекты Subject
+    @Query("SELECT s FROM Subject s WHERE s.id IN :ids")
+    List<Subject> getSubjectsByIds(@Param("ids") List<Integer> ids);
+
+    // ✅ Если нужен один предмет по ID
+    @Query("SELECT s.name FROM Subject s WHERE s.id = :id")
     String getSubjectNameById(@Param("id") Integer id);
 
-
-    /**
-     * Gets subject names by ids.
-     *
-     * @param subjectIds the subject ids
-     * @return the subject names by ids
-     */
-    @Query("SELECT s.subjectName FROM Subject s WHERE s.id IN :subjectIds")
-    List<String> getSubjectNamesByIds(List<Integer> subjectIds);
-
+    Optional<Subject> findByName(String name);
 }

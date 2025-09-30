@@ -1,6 +1,7 @@
 package com.marensovich.eljur.service;
 
 
+import com.marensovich.eljur.data.system.RegKeysStatus;
 import com.marensovich.eljur.model.RegKeys;
 import com.marensovich.eljur.repository.RegKeysRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,8 +65,8 @@ public class RegKeysService {
      * @return the string
      */
     public String findRegistrationKey(String registrationKey) {
-        Optional<RegKeys> regKeysOptional = regKeysRepository.findByRegistrationKey(registrationKey);
-        return regKeysOptional.map(RegKeys::getRegistrationKey).orElse(null);
+        Optional<RegKeys> regKeysOptional = regKeysRepository.findByKey(registrationKey);
+        return regKeysOptional.map(RegKeys::getKey).orElse(null);
     }
 
     /**
@@ -75,7 +76,7 @@ public class RegKeysService {
      * @return the email by registration key
      */
     public String getEmailByRegistrationKey(String registrationKey) {
-        Optional<RegKeys> regKeyOptional = regKeysRepository.findByRegistrationKey(registrationKey);
+        Optional<RegKeys> regKeyOptional = regKeysRepository.findByKey(registrationKey);
         return regKeyOptional.map(RegKeys::getEmail).orElse(null);
     }
 
@@ -85,8 +86,8 @@ public class RegKeysService {
      * @param registrationKey the registration key
      * @return the status by registration key
      */
-    public String getStatusByRegistrationKey(String registrationKey) {
-        Optional<RegKeys> regKeyOptional = regKeysRepository.findByRegistrationKey(registrationKey);
+    public RegKeysStatus getStatusByRegistrationKey(String registrationKey) {
+        Optional<RegKeys> regKeyOptional = regKeysRepository.findByKey(registrationKey);
         return regKeyOptional.map(RegKeys::getStatus).orElse(null);
     }
 

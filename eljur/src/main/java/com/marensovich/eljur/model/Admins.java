@@ -1,28 +1,30 @@
 package com.marensovich.eljur.model;
 
-
+import com.marensovich.eljur.data.AdminPosts;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.io.Serializable;
-
-/**
- * The type Admins.
- */
 @Entity
 @Data
-@Table(name = "admin")
-public class Admins implements Serializable {
+@Table(name = "admins")
+public class Admins {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "admin_id", nullable = false, unique = true)
+    @Column(name = "id")
     private Integer id;
 
-    @Column(name = "admin_post", nullable = true, unique = false)
-    private String post;
-    @Column(name = "admin_photoLink", nullable = true, unique = false)
+    @OneToOne
+    @JoinColumn(name = "userId", nullable = false)
+    private User user;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "post", length = 45)
+    private AdminPosts post;
+
+    @Column(name = "photoLink", length = 45)
     private String photoLink;
-    @Column(name = "admin_room", nullable = true, unique = false)
+
+    @Column(name = "room", length = 45)
     private String room;
 }

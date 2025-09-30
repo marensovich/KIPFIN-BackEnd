@@ -73,7 +73,7 @@ public class FilesController {
      */
     @GetMapping("/download/{id}")
     public ResponseEntity<byte[]> downloadFile(@PathVariable Integer id) {
-        Optional<Files> fileOptional = filesRepository.findById(id);
+        Optional<Files> fileOptional = filesRepository.findById(id.toString());
 
         if (fileOptional.isEmpty()) throw new FileNotFoundException("The requested file was not found");
 

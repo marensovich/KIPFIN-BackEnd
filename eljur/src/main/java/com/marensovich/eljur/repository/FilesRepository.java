@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -13,21 +14,7 @@ import java.util.Optional;
 @Repository
 public interface FilesRepository extends JpaRepository<Files, String> {
 
-    /**
-     * Gets file name by id.
-     *
-     * @param id the id
-     * @return the file name by id
-     */
-    @Query("SELECT f.filename FROM Files f WHERE f.id = :id")
-    String getFileNameById(String id);
+    String getFilenameById(Integer id);
 
-
-    /**
-     * Find by id optional.
-     *
-     * @param id the id
-     * @return the optional
-     */
-    Optional<Files> findById(Integer id);
+    List<String> getFilenamesByFilename(String filename);
 }

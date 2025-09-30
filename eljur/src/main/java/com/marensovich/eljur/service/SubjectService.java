@@ -47,7 +47,7 @@ public class SubjectService {
      */
 // Method to find a subject by its name
     public Optional<Subject> findSubjectByName(String subjectName) {
-        return subjectRepository.findBySubjectName(subjectName);
+        return subjectRepository.findByName(subjectName);
     }
 
     /**

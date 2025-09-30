@@ -1,8 +1,8 @@
 package com.marensovich.eljur.service;
 
-import com.marensovich.eljur.model.PrivateMessage;
+import com.marensovich.eljur.model.Messages;
 import com.marensovich.eljur.model.User;
-import com.marensovich.eljur.repository.PrivateMessageRepository;
+import com.marensovich.eljur.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class PrivateMessageService {
 
     @Autowired
-    private PrivateMessageRepository privateMessageRepository;
+    private MessageRepository messageRepository;
 
     /**
      * Gets private messages.
@@ -26,16 +26,16 @@ public class PrivateMessageService {
      * @return the private messages
      */
     public TreeMap<String, TreeMap<Integer, Map<String, Object>>> getPrivateMessages(Optional<User> user) {
-        List<PrivateMessage> pm = privateMessageRepository.getPrivateMessagesById(user.get().getId());
+        List<Messages> pm = messageRepository.getMessagesBySender_IdAndTarget_Id(user.get().getId(), user.get().getId());
         return pm.stream().collect(Collectors.groupingBy(
-                privateMessage -> privateMessage.getDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),
+                messages -> messages.getTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),
                 TreeMap::new,
                 Collectors.toMap(
-                        PrivateMessage::getId,
-                        privateMessage -> {
+                        Messages::getId,
+                        messages -> {
                             Map<String, Object> pmDetails = new HashMap<>();
-                            pmDetails.put("fromID", privateMessageRepository.getFromIDById(privateMessage.getId()));
-                            pmDetails.put("message", privateMessageRepository.getMessageById(privateMessage.getId()));
+                            pmDetails.put("fromID", messageRepository.getMessagesBySender_Id(messages.getId()));
+                            pmDetails.put("message", messageRepository.getMessagesById(messages.getId()));
                             return pmDetails;
                         },
                         (existing, replacement) -> existing,

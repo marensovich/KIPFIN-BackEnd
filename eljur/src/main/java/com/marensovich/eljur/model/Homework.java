@@ -2,36 +2,35 @@ package com.marensovich.eljur.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
-
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * The type Homework.
- */
 @Data
 @Entity
 @Table(name = "homework")
-public class Homework implements Serializable {
+public class Homework {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "homework_id", unique = true, nullable = false)
+    @Column(name = "id")
     private Integer id;
 
-    @Column(name = "homework_groupID", nullable = false)
-    private Integer groupID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "groupId", nullable = false)
+    private Groups group;
 
-    @Column(name = "homework_subgroup")
+    @Column(name = "subgroup", nullable = false)
     private Integer subgroup;
 
-    @Column(name = "homework_text", nullable = false)
-    private String homework;
+    @Column(name = "test", nullable = false, columnDefinition = "TEXT")
+    private String text;
 
-    @Column(name = "homework_lessonID", nullable = false)
-    private Integer lessonID;
+    @Column(name = "lessonId", nullable = false)
+    private Integer lessonId;
 
-    @Column(name = "ListFileID")
-    private String fileID;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "homeworkIds")
+    private List<Files> files = new ArrayList<>();
 
 }

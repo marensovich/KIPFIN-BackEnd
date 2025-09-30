@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.OptionalDouble;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -37,6 +34,8 @@ public class ScoreService {
     private SubjectRepository subjectRepository;
     @Autowired
     private FinalScoresRepository finalScoresRepository;
+    @Autowired
+    private UserRepository userRepository;
 
 
     /**
@@ -47,13 +46,13 @@ public class ScoreService {
      * @return the map
      */
     public Map<String, Object> getFinalScores(User user, int year){
-        List<FinalScores> finalScores = finalScoresRepository.findByUserIDAndYear(user.getId(), Year.of(year));
+        List<FinalScores> finalScores = finalScoresRepository.findByIdAndYear(user.getId(), Year.of(year));
         Map<String, Map<String, Object>> result = new HashMap<>();
         Map<String, Double> averageScores = new HashMap<>();
         for (FinalScores score : finalScores) {
-            String subjectName = subjectRepository.getSubjectNameById(score.getSubjectID());
+            String subjectName = subjectRepository.getSubjectById(score.getSubject().getId()).getName();
             int half = score.getHalf();
-            int numericValue = score.getResult().getNumericValue();
+            int numericValue = Integer.parseInt(score.getResult());
             result.putIfAbsent(subjectName, new HashMap<>());
             result.get(subjectName).put("half" + half, numericValue);
         }
@@ -109,25 +108,25 @@ public class ScoreService {
             default -> throw new IllegalArgumentException("Неверное значение half: " + half);
         };
 
-        Students student = studentsRepository.getById(user.getId());
-        List<Integer> subjectIds = groupsToSubjectRepository.getAllSubjectsByGroupId(student.getGroup());
+        Students student = studentsRepository.getStudentsById(user.getId());
+        List<Integer> subjectIds = groupsToSubjectRepository.getAllSubjectsByGroup_Id(student.getGroup().getId());
         List<String> subjects = subjectRepository.getSubjectNamesByIds(subjectIds);
         List<Score> scores;
         if (startDate != null && endDate != null) {
-            scores = scoreRepository.getAllByUserIDAndDateBetween(user.getId(), startDate, endDate);
+            scores = scoreRepository.getAllByUserAndDateBetween(user, startDate, endDate);
         } else {
-            scores = scoreRepository.getAllByUserID(user.getId());
+            scores = scoreRepository.getAllByUser(user);
         }
         Map<String, List<Map<String, Object>>> scoresBySubject = scores.stream()
                 .collect(Collectors.groupingBy(
-                        score -> subjectRepository.getSubjectNameById(score.getSubjectID()),
+                        score -> subjectRepository.getSubjectNameById(score.getSubject().getId()),
                         Collectors.mapping(
                                 score -> {
                                     Map<String, Object> scoreDetails = new HashMap<>();
-                                    scoreDetails.put("score", convertScoreTypeToInt(score.getScoreType().toString()));
+                                    scoreDetails.put("score", convertScoreTypeToInt(score.getType().toString()));
                                     scoreDetails.put("date", score.getDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
-                                    scoreDetails.put("comment", score.getScoreText());
-                                    scoreDetails.put("workType", convertScoreWorkTypeToString(score.getScoreWork().toString()));
+                                    scoreDetails.put("comment", score.getText());
+                                    scoreDetails.put("workType", convertScoreWorkTypeToString(score.getWorkType().toString()));
                                     return scoreDetails;
                                 },
                                 Collectors.toList()
@@ -146,7 +145,9 @@ public class ScoreService {
      * @return the avg score by user id
      */
     public Double getAvgScoreByUserID(Integer userID) {
-        List<String> scoreStrings = scoreRepository.getScoreListByUserID(userID);
+        List<String> scoreStrings = Collections.singletonList(scoreRepository.getScoresByUser(userRepository.getUserById(userID)).stream()
+                .map(ScoreType::getScore)
+                .toString());
 
         if (scoreStrings.isEmpty()) {
             return 0.0;
@@ -177,7 +178,7 @@ public class ScoreService {
      * @return the avg score by subject
      */
     public Double getAvgScoreBySubject(Integer subjectID, Integer userID) {
-        List<String> scoreStrings = scoreRepository.getScoreListByUserIDAndSubject(userID, subjectID);
+        List<String> scoreStrings = scoreRepository.getScoresByUser_IdAndSubject_Id(userID, subjectID);
 
         if (scoreStrings.isEmpty()) {
             return 0.0;

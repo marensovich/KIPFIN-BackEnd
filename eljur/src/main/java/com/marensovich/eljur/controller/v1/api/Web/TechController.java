@@ -167,8 +167,8 @@ public class TechController {
     @GetMapping("/graph")
     public Map<String, Object> getGraphData(@RequestParam(required = false, defaultValue = "24h") String range) {
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime startTime = now.minusHours(24);
-        List<StatRecord> records = statRepository.findStatsSince(startTime);
+        LocalDateTime startTime = now.minusHours(Long.parseLong(range));
+        List<StatRecord> records = statRepository.findByTimestampAfter(startTime);
 
         Map<Integer, List<StatRecord>> groupedByHour = records.stream()
                 .collect(Collectors.groupingBy(record -> record.getTimestamp().getHour()));
@@ -218,8 +218,8 @@ public class TechController {
     @GetMapping("/all")
     public Map<String, Object> getAllStats(@RequestParam(required = false, defaultValue = "24h") String range) {
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime startTime = now.minusHours(24);
-        List<StatRecord> records = statRepository.findStatsSince(startTime);
+        LocalDateTime startTime = now.minusHours(Long.parseLong(range));
+        List<StatRecord> records = statRepository.findByTimestampAfter(startTime);
 
         Map<Integer, List<StatRecord>> groupedByHour = records.stream()
                 .collect(Collectors.groupingBy(record -> record.getTimestamp().getHour()));

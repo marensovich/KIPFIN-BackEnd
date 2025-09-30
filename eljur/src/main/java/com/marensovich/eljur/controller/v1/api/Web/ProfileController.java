@@ -6,6 +6,7 @@ import com.marensovich.eljur.exceptions.Exceptions.UserNotFoundException;
 import com.marensovich.eljur.model.*;
 import com.marensovich.eljur.repository.*;
 import com.marensovich.eljur.service.ProfileService;
+import com.marensovich.eljur.service.UserSettingsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +41,10 @@ public class ProfileController {
     private JwtUtil jwtUtil;
     @Autowired
     private ProfileService profileService;
+    @Autowired
+    private SettingsRepository settingsRepository;
+    @Autowired
+    private UserSettingsService userSettingsService;
 
     /**
      * Updates user notification settings.
@@ -103,7 +108,7 @@ public class ProfileController {
 
         if (user.isEmpty()) throw new UserNotFoundException("User not found");
 
-        user.get().setProfileImage(filename);
+        userSettingsService.updateProfileImage(userID, filename);
         return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Settings successfully applied"));
     }
 

@@ -12,27 +12,6 @@ import java.util.Optional;
  */
 @Repository
 public interface RegKeysRepository extends JpaRepository<RegKeys, String> {
-    /**
-     * Find by status list.
-     *
-     * @param status the status
-     * @return the list
-     */
-    List<RegKeys> findByStatus(String status);
 
-    /**
-     * Find by email list.
-     *
-     * @param email the email
-     * @return the list
-     */
-    List<RegKeys> findByEmail(String email);
-
-    /**
-     * Find by registration key optional.
-     *
-     * @param registrationKey the registration key
-     * @return the optional
-     */
-    Optional<RegKeys> findByRegistrationKey(String registrationKey);
+    Optional<RegKeys> findByKey(String key);
 }
