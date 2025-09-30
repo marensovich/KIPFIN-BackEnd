@@ -1,8 +1,8 @@
-![GitHub commit activity](https://img.shields.io/github/commit-activity/t/marensovich/FlowerOfEternityDiscordBot)
-![GitHub Created At](https://img.shields.io/github/created-at/marensovich/FlowerOfEternityDiscordBot)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/marensovich/KIPFIN-BackEnd)
+![GitHub Created At](https://img.shields.io/github/created-at/marensovich/KIPFIN-BackEnd)
 [![wakatime](https://wakatime.com/badge/user/c1fedeb3-9e6d-4f37-ac09-6a0827a0d48a/project/aff54df7-5fa4-4d30-ab85-7989cdcea744.svg)](https://wakatime.com/badge/user/c1fedeb3-9e6d-4f37-ac09-6a0827a0d48a/project/aff54df7-5fa4-4d30-ab85-7989cdcea744) 
-![GitHub repo size](https://img.shields.io/github/repo-size/marensovich/FlowerOfEternityDiscordBot)
-![GitHub watchers](https://img.shields.io/github/watchers/marensovich/FlowerOfEternityDiscordBot)
+![GitHub repo size](https://img.shields.io/github/repo-size/marensovich/KIPFIN-BackEnd)
+![GitHub watchers](https://img.shields.io/github/watchers/marensovich/KIPFIN-BackEnd)
 
 # 📚 Electronic Diary (Eljur)
 
