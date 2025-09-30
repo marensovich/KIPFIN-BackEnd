@@ -1,5 +1,6 @@
 package com.marensovich.eljur.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.marensovich.eljur.data.system.NotificationType;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -14,8 +15,10 @@ public class Settings {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id", nullable = false)
+    @JsonBackReference
     private User user;
 
     @Enumerated(EnumType.STRING)

@@ -1,5 +1,6 @@
 package com.marensovich.eljur.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.marensovich.eljur.data.system.PostTypes;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -50,6 +51,7 @@ public class User {
 
     // Связи
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private Settings settings;
 
 

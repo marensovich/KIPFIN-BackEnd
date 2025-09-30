@@ -1,5 +1,6 @@
 package com.marensovich.eljur.service;
 
+import com.marensovich.eljur.data.AdminPosts;
 import com.marensovich.eljur.data.system.PostTypes;
 import com.marensovich.eljur.data.system.RegKeysStatus;
 import com.marensovich.eljur.exceptions.Exceptions.ActivatedRegistrationCodeException;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -28,6 +30,8 @@ public class AuthService {
     @Autowired private UserRepository userRepository;
     @Autowired
     private GroupsRepository groupsRepository;
+    @Autowired
+    private AdminRepostory adminRepostory;
 
     //private PasswordEncoder passwordEncoder;
 
@@ -86,6 +90,8 @@ public class AuthService {
             case admin -> {
                 Admins admin = new Admins();
                 admin.setId(user.getId());
+                admin.setPost(AdminPosts.DIRECTOR);
+                adminRepostory.save(admin);
             }
         }
     }
