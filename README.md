@@ -46,11 +46,6 @@ KIPFIN_BackEnd/
 
 Подробней о версиях в файле [CHANGELOG.md](https://github.com/marensovich/KIPFIN_BackEnd/blob/master/CHANGELOG.md)
 
-## 📬 Контакты
-
-По вопросам сотрудничества и предложениям:   
-💬 [Telegram](https://t.me/marensovich)
-
 <div align="center">
   <sub>Создано с ❤️ для образовательного процесса</sub>
 </div>
